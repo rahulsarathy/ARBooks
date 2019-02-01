@@ -12,6 +12,8 @@
 		B7269D1D2204BFE700DB29B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7269D1B2204BFE700DB29B3 /* Main.storyboard */; };
 		B7269D1F2204BFE800DB29B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B7269D1E2204BFE800DB29B3 /* Assets.xcassets */; };
 		B7269D222204BFE800DB29B3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7269D202204BFE800DB29B3 /* LaunchScreen.storyboard */; };
+		B7269D2D2204C19400DB29B3 /* OpenCVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = B7269D2C2204C19400DB29B3 /* OpenCVWrapper.mm */; };
+		B7269D302204C1D700DB29B3 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7269D2F2204C1D700DB29B3 /* opencv2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,10 @@
 		B7269D1E2204BFE800DB29B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B7269D212204BFE800DB29B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B7269D232204BFE800DB29B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B7269D2A2204C19300DB29B3 /* ChessboardDetection-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChessboardDetection-Bridging-Header.h"; sourceTree = "<group>"; };
+		B7269D2B2204C19400DB29B3 /* OpenCVWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenCVWrapper.h; sourceTree = "<group>"; };
+		B7269D2C2204C19400DB29B3 /* OpenCVWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVWrapper.mm; sourceTree = "<group>"; };
+		B7269D2F2204C1D700DB29B3 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7269D302204C1D700DB29B3 /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +45,7 @@
 		B7269D0B2204BFE700DB29B3 = {
 			isa = PBXGroup;
 			children = (
+				B7269D2E2204C1AD00DB29B3 /* Frameworks */,
 				B7269D162204BFE700DB29B3 /* ChessboardDetection */,
 				B7269D152204BFE700DB29B3 /* Products */,
 			);
@@ -56,12 +64,31 @@
 			children = (
 				B7269D172204BFE700DB29B3 /* AppDelegate.swift */,
 				B7269D192204BFE700DB29B3 /* ViewController.swift */,
+				B7269D292204C18300DB29B3 /* OpenCV */,
 				B7269D1B2204BFE700DB29B3 /* Main.storyboard */,
 				B7269D1E2204BFE800DB29B3 /* Assets.xcassets */,
 				B7269D202204BFE800DB29B3 /* LaunchScreen.storyboard */,
 				B7269D232204BFE800DB29B3 /* Info.plist */,
 			);
 			path = ChessboardDetection;
+			sourceTree = "<group>";
+		};
+		B7269D292204C18300DB29B3 /* OpenCV */ = {
+			isa = PBXGroup;
+			children = (
+				B7269D2B2204C19400DB29B3 /* OpenCVWrapper.h */,
+				B7269D2C2204C19400DB29B3 /* OpenCVWrapper.mm */,
+				B7269D2A2204C19300DB29B3 /* ChessboardDetection-Bridging-Header.h */,
+			);
+			path = OpenCV;
+			sourceTree = "<group>";
+		};
+		B7269D2E2204C1AD00DB29B3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B7269D2F2204C1D700DB29B3 /* opencv2.framework */,
+			);
+			path = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -96,6 +123,7 @@
 				TargetAttributes = {
 					B7269D132204BFE700DB29B3 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
 				};
 			};
@@ -137,6 +165,7 @@
 			files = (
 				B7269D1A2204BFE700DB29B3 /* ViewController.swift in Sources */,
 				B7269D182204BFE700DB29B3 /* AppDelegate.swift in Sources */,
+				B7269D2D2204C19400DB29B3 /* OpenCVWrapper.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,8 +311,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5VZ9W9NJVJ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = ChessboardDetection/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -291,6 +325,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.ChessboardDetection;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ChessboardDetection/OpenCV/ChessboardDetection-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -300,8 +336,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5VZ9W9NJVJ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = ChessboardDetection/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -309,6 +350,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.ChessboardDetection;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ChessboardDetection/OpenCV/ChessboardDetection-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
