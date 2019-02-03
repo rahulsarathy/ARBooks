@@ -9,28 +9,49 @@
 import UIKit
 import ARKit
 
+let MARKER_SIZE_IN_METERS : CGFloat = 0.035;
+
 
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     @IBOutlet weak var mainImage: UIImageView!
     @IBOutlet weak var sceneView: ARSCNView!
     
-    let OpenCV = OpenCVWrapper()
+    var displayLink: CADisplayLink?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let configuration = ARWorldTrackingConfiguration()
+        sceneView.session.run(configuration)
         
-        // Do any additional setup after loading the view, typically from a nib.
-    }
+        self.displayLink = CADisplayLink(target: self, selector: #selector(self.displayLinkDidFire))
+        self.displayLink?.preferredFramesPerSecond = self.sceneView.preferredFramesPerSecond
+        
+        displayLink?.add(to: RunLoop.main, forMode: RunLoop.Mode.common)
 
-    // MARK: -ARSessionDelegate
+    }
     
-    func session(_ session: ARSession, didUpdate frame: ARFrame) {
+    @objc func displayLinkDidFire(timer: CADisplayLink) {
+        // Our capturer polls the ARSCNView's snapshot for processed AR video content, and then copies the result into a CVPixelBuffer.
+        // This process is not ideal, but it is the most straightforward way to capture the output of SceneKit.
+        let myImage = self.sceneView.snapshot()
         
-        self.OpenCV.findMarker(frame.capturedImage, withCameraIntrinsics: frame.camera.intrinsics, cameraSize: frame.camera.imageResolution)
-
+        let openCVWrapper = OpenCVWrapper()
+        
+        //let arImage = openCVWrapper.addAR(myImage)
+       // let markedImage = openCVWrapper.findMarkers(myImage)
+        
+        let markedImage = openCVWrapper.findMarkers(myImage)
+        
+        DispatchQueue.main.async {
+            self.mainImage.image = markedImage
+        }
+        
+        
     }
+    
+
 
 }
 

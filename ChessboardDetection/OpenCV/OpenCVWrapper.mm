@@ -10,6 +10,8 @@
 #import "OpenCVWrapper.h"
 #import "opencv2/imgproc.hpp"
 #import "opencv2/aruco.hpp"
+#include <iostream>
+#include <vector>
 
 using namespace std;
 using namespace cv;
@@ -117,7 +119,6 @@ using namespace cv;
     //putText(cvMat, "hello", (10,500), myFont, 4, (255,255,255));
     return [OpenCVWrapper UIImageFromCVMat:cvMat];
     
-    //parameters =
 }
 
 - (UIImage *)findMarkers:(UIImage *)source {
@@ -137,15 +138,32 @@ using namespace cv;
     Ptr<aruco::DetectorParameters> params = aruco::DetectorParameters::create();
 
     aruco::detectMarkers(gray, markerDictionary, markerCorners, markerIds, params);
-
+    
+    for (int i = 0; i < markerCorners.size(); i++)
+    {
+        for (int j = 0; j < markerCorners[i].size(); j++)
+        {
+            cout << markerCorners[i][j];
+        }
+    }
+    
     cv::cvtColor(original, output, COLOR_BGRA2BGR);
-
+    
     aruco::drawDetectedMarkers(output, markerCorners, markerIds, Scalar(0, 255, 0));
 
     return [OpenCVWrapper UIImageFromCVMat:output];
 }
 
-- (void) isThisWorking {
++ (void) printVector:(std::vector<int>) input
+{
+    for (int i = 0; i < input.size(); i++) {
+        std::cout << input.at(i) << ' ';
+    }
+}
+
+
++ (void) isThisWorking {
     cout << "Hey" << endl;
 }
+
 @end
