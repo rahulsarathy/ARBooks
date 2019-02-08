@@ -15,8 +15,12 @@ let MARKER_SIZE_IN_METERS : CGFloat = 0.035;
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     @IBOutlet weak var sceneView: ARSCNView!
+    @IBOutlet weak var mainImage: UIImageView!
     
+    
+    var showCV: Bool = false
     var lastDistance : Float! = nil
+    
     var lastPos : SCNVector3! = nil
     var lastFoundPos : SCNVector3! = nil
     var lastFoundxDir : SCNVector3! = nil
@@ -29,54 +33,29 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     var displayLink: CADisplayLink?
     
     override func viewDidLoad() {
+        print("view did load")
         super.viewDidLoad()
         
         sceneView.session.delegate = self
         
-        let configuration = ARWorldTrackingConfiguration()
-        sceneView.session.run(configuration)
-        
-       // mainImage.contentMode = .scaleAspectFit
-
-      //  mainImage.image = myImage
+        self.useArKit()
         
         self.ballNode = getBall(color: UIColor.green.withAlphaComponent(0.8), radius: 0.005)
         self.sceneView.scene.rootNode.addChildNode(ballNode)
 
-        
-      //  self.displayLink = CADisplayLink(target: self, selector: #selector(self.displayLinkDidFire))
-     //   self.displayLink?.preferredFramesPerSecond = self.sceneView.preferredFramesPerSecond
-
-     //   displayLink?.add(to: RunLoop.main, forMode: RunLoop.Mode.common)
-
     }
     
-//    @objc func displayLinkDidFire(timer: CADisplayLink) {
-//        // Our capturer polls the ARSCNView's snapshot for processed AR video content, and then copies the result into a CVPixelBuffer.
-//        // This process is not ideal, but it is the most straightforward way to capture the output of SceneKit.
-//        let myImage = self.sceneView.snapshot()
-//
-//        //let openCVWrapper = OpenCVWrapper()
-//
-//        //let arImage = openCVWrapper.addAR(myImage)
-//       // let markedImage = openCVWrapper.findMarkers(myImage)
-//
-//        let markedImage = OpenCVWrapper.findMarkers(myImage)
-//
-//        DispatchQueue.main.async {
-//            self.mainImage.image = markedImage
-//        }
-//
-//
-//    }
+    private func useArKit() {
+        let configuration = ARWorldTrackingConfiguration()
+        self.sceneView.session.run(configuration)
+    }
     
-//    private  getXAxis(myMat: SCNMatrix4) -> SCNVector3
-//    {
-//        return SCNVector3(myMat.m11, myMat.m12, myMat.m13)
-//    }
-//
+    @IBAction func goTOOpenCV(_ sender: Any) {
+        performSegue(withIdentifier: "goToCV", sender: self)
+    }
+    
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
-        updateMarker()
+       updateMarker()
     }
     
     func getBall(color : UIColor, radius: CGFloat = 0.01) -> SCNNode {

@@ -16,6 +16,7 @@
 		B7269D2D2204C19400DB29B3 /* OpenCVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = B7269D2C2204C19400DB29B3 /* OpenCVWrapper.mm */; };
 		B7269D302204C1D700DB29B3 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7269D2F2204C1D700DB29B3 /* opencv2.framework */; };
 		B77849F1220689B20021C0B5 /* IMG_3380.JPG in Resources */ = {isa = PBXBuildFile; fileRef = B77849F0220689B10021C0B5 /* IMG_3380.JPG */; };
+		B7D8F15D220E2FF5002C21DF /* OpenCVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D8F15C220E2FF5002C21DF /* OpenCVViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		B7269D2C2204C19400DB29B3 /* OpenCVWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVWrapper.mm; sourceTree = "<group>"; };
 		B7269D2F2204C1D700DB29B3 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		B77849F0220689B10021C0B5 /* IMG_3380.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_3380.JPG; sourceTree = "<group>"; };
+		B7D8F15C220E2FF5002C21DF /* OpenCVViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCVViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 				B77849F0220689B10021C0B5 /* IMG_3380.JPG */,
 				B7269D202204BFE800DB29B3 /* LaunchScreen.storyboard */,
 				B7269D232204BFE800DB29B3 /* Info.plist */,
+				B7D8F15C220E2FF5002C21DF /* OpenCVViewController.swift */,
 			);
 			path = ChessboardDetection;
 			sourceTree = "<group>";
@@ -171,6 +174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7269D1A2204BFE700DB29B3 /* ViewController.swift in Sources */,
+				B7D8F15D220E2FF5002C21DF /* OpenCVViewController.swift in Sources */,
 				B7269D182204BFE700DB29B3 /* AppDelegate.swift in Sources */,
 				B7269D2D2204C19400DB29B3 /* OpenCVWrapper.mm in Sources */,
 				B72419AE220A8E3100C196C3 /* SCNVector3+Extensions.swift in Sources */,

@@ -296,6 +296,33 @@ using namespace cv;
     return mat;
 }
 
++ (UIImage *)findMarkersPB:(CVPixelBufferRef)pixelBuffer {
+    Mat original = [OpenCVWrapper convertPixelBufferToOpenCV:pixelBuffer];
+    Mat output;
+    
+    Mat gray;
+    
+   // cvtColor(original, gray, COLOR_BGR2GRAY);
+    
+    vector<int> markerIds;
+    vector<vector<Point2f>> markerCorners;
+    
+    Ptr<aruco::Dictionary> markerDictionary = getPredefinedDictionary(aruco::DICT_6X6_50);
+    
+    Ptr<aruco::DetectorParameters> params = aruco::DetectorParameters::create();
+    
+  //  aruco::detectMarkers(gray, markerDictionary, markerCorners, markerIds, params);
+    aruco::detectMarkers(original, markerDictionary, markerCorners, markerIds, params);
+    
+    cout << markerIds.size() << std::endl;
+    
+   cv::cvtColor(original, output, COLOR_BGRA2BGR);
+    
+    aruco::drawDetectedMarkers(output, markerCorners, markerIds, Scalar(0, 255, 0));
+    
+    return [OpenCVWrapper UIImageFromCVMat:output];
+}
+
 + (void) isThisWorking {
     cout << "Hey" << endl;
 }

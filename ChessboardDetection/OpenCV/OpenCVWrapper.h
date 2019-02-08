@@ -31,6 +31,7 @@ typedef struct MarkerPose {
 - (UIImage *)addAR:(UIImage *)source;
 + (UIImage *)findMarkers:(UIImage *)source;
 + (MarkerPose) findPose:(CVPixelBufferRef)pixelBuffer withIntrinsics:(matrix_float3x3)intrinsics andMarkerSize:(Float64)markerSize;
++ (UIImage *)findMarkersPB:(CVPixelBufferRef)pixelBuffer;
 + (void)isThisWorking;
 @end
 
