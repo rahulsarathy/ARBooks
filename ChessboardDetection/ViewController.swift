@@ -81,12 +81,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         let intrinsics = frame.camera.intrinsics
         
         guard let camera = self.sceneView.pointOfView else { return }
+        
+        let imageDownsample : Float32 = 2.5
 
         let markerLengthMM : Float64 = 3.5
         
         let markerLength : Float64 = markerLengthMM / 1000.0
         
-        let result = OpenCVWrapper.findPose(pixelBuffer, withIntrinsics: intrinsics, andMarkerSize: markerLength)
+        let result = OpenCVWrapper.findPose(pixelBuffer, withIntrinsics: intrinsics, andMarkerSize: markerLength, imageDownsample: imageDownsample)
         
         if result.found {
             
