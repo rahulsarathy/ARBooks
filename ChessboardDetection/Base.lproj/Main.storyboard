@@ -21,25 +21,17 @@
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bco-bA-yJj">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </arscnView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zH8-b1-ker">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="zH8-b1-ker" secondAttribute="bottom" id="FMf-eM-qad"/>
                             <constraint firstItem="bco-bA-yJj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="GKv-oh-4QR"/>
-                            <constraint firstItem="zH8-b1-ker" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="RhT-28-SH1"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bco-bA-yJj" secondAttribute="trailing" id="brl-tn-o90"/>
-                            <constraint firstItem="zH8-b1-ker" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="owy-f3-1gZ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="bco-bA-yJj" secondAttribute="bottom" id="rMg-td-De7"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zH8-b1-ker" secondAttribute="trailing" id="rwP-jq-ZFg"/>
                             <constraint firstItem="bco-bA-yJj" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="twh-6b-x3U"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="mainImage" destination="zH8-b1-ker" id="DQc-Yh-JOC"/>
                         <outlet property="sceneView" destination="bco-bA-yJj" id="qap-Yq-ccN"/>
                     </connections>
                 </viewController>
