@@ -30,8 +30,7 @@ typedef struct MarkerPose {
 @interface OpenCVWrapper : NSObject
 - (UIImage *)addAR:(UIImage *)source;
 + (UIImage *)findMarkers:(UIImage *)source;
-+ (MarkerPose) findPose:(CVPixelBufferRef)pixelBuffer withIntrinsics:(matrix_float3x3)intrinsics andMarkerSize:(Float64)markerSize;
-+ (UIImage *)findMarkersPB:(CVPixelBufferRef)pixelBuffer;
++ (MarkerPose) findPose:(CVPixelBufferRef)pixelBuffer withIntrinsics:(matrix_float3x3)intrinsics andMarkerSize:(Float64)markerSize imageDownsample:(float)scale;
 + (void)isThisWorking;
 @end
 

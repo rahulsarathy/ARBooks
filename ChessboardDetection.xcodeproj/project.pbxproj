@@ -17,6 +17,8 @@
 		B7269D302204C1D700DB29B3 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7269D2F2204C1D700DB29B3 /* opencv2.framework */; };
 		B77849F1220689B20021C0B5 /* IMG_3380.JPG in Resources */ = {isa = PBXBuildFile; fileRef = B77849F0220689B10021C0B5 /* IMG_3380.JPG */; };
 		B7D8F15D220E2FF5002C21DF /* OpenCVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D8F15C220E2FF5002C21DF /* OpenCVViewController.swift */; };
+		B7D8F15F220E3B3D002C21DF /* CVUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = B7D8F15E220E3B3D002C21DF /* CVUtils.mm */; };
+		B7D8F162220E3B80002C21DF /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D8F161220E3B80002C21DF /* Accelerate.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,9 @@
 		B7269D2F2204C1D700DB29B3 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		B77849F0220689B10021C0B5 /* IMG_3380.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_3380.JPG; sourceTree = "<group>"; };
 		B7D8F15C220E2FF5002C21DF /* OpenCVViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCVViewController.swift; sourceTree = "<group>"; };
+		B7D8F15E220E3B3D002C21DF /* CVUtils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CVUtils.mm; sourceTree = "<group>"; };
+		B7D8F160220E3B4B002C21DF /* CVUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CVUtils.h; sourceTree = "<group>"; };
+		B7D8F161220E3B80002C21DF /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7D8F162220E3B80002C21DF /* Accelerate.framework in Frameworks */,
 				B7269D302204C1D700DB29B3 /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -88,6 +94,8 @@
 				B7269D2B2204C19400DB29B3 /* OpenCVWrapper.h */,
 				B7269D2C2204C19400DB29B3 /* OpenCVWrapper.mm */,
 				B7269D2A2204C19300DB29B3 /* ChessboardDetection-Bridging-Header.h */,
+				B7D8F15E220E3B3D002C21DF /* CVUtils.mm */,
+				B7D8F160220E3B4B002C21DF /* CVUtils.h */,
 			);
 			path = OpenCV;
 			sourceTree = "<group>";
@@ -95,6 +103,7 @@
 		B7269D2E2204C1AD00DB29B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B7D8F161220E3B80002C21DF /* Accelerate.framework */,
 				B7269D2F2204C1D700DB29B3 /* opencv2.framework */,
 			);
 			path = Frameworks;
@@ -175,6 +184,7 @@
 			files = (
 				B7269D1A2204BFE700DB29B3 /* ViewController.swift in Sources */,
 				B7D8F15D220E2FF5002C21DF /* OpenCVViewController.swift in Sources */,
+				B7D8F15F220E3B3D002C21DF /* CVUtils.mm in Sources */,
 				B7269D182204BFE700DB29B3 /* AppDelegate.swift in Sources */,
 				B7269D2D2204C19400DB29B3 /* OpenCVWrapper.mm in Sources */,
 				B72419AE220A8E3100C196C3 /* SCNVector3+Extensions.swift in Sources */,

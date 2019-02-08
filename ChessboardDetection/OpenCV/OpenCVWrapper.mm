@@ -12,6 +12,7 @@
 #import "opencv2/aruco.hpp"
 #include <iostream>
 #include <vector>
+#include "CVUtils.h"
 
 using namespace std;
 using namespace cv;
@@ -26,6 +27,9 @@ using namespace cv;
 
 
 @implementation OpenCVWrapper
+
+static vImage_Buffer dest_buffer = {NULL, 0, 0, 0};
+
 
 + (Mat)cvMatFromUIImage:(UIImage *)image
 {
@@ -155,51 +159,7 @@ using namespace cv;
     return [OpenCVWrapper UIImageFromCVMat:output];
 }
 
-//+(SCNMatrix4) findPose:(CVPixelBufferRef)pixelBuffer withIntrinsics:(matrix_float3x3)intrinsics andMarkerSize:(Float64)markerSize {
-//
-//    cv::Mat cameraMatrix(3,3,CV_64F);
-//    cv::Mat image;
-//    vector<vector<Point2f>> markerCorners, rejectedCandidates;
-//    vector<int> markerIds;
-//    vector<Vec3d> rotationVectors, translationVectors;
-//
-//    image = [OpenCVWrapper convertPixelBufferToOpenCV:pixelBuffer];
-//
-//    aruco::DetectorParameters parameters;
-//
-//    cameraMatrix.at<Float64>(0,0) = intrinsics.columns[0][0];
-//    cameraMatrix.at<Float64>(0,1) = intrinsics.columns[1][0];
-//    cameraMatrix.at<Float64>(0,2) = intrinsics.columns[2][0];
-//    cameraMatrix.at<Float64>(1,0) = intrinsics.columns[0][1];
-//    cameraMatrix.at<Float64>(1,1) = intrinsics.columns[1][1];
-//    cameraMatrix.at<Float64>(1,2) = intrinsics.columns[2][1];
-//    cameraMatrix.at<Float64>(2,0) = intrinsics.columns[0][2];
-//    cameraMatrix.at<Float64>(2,1) = intrinsics.columns[1][2];
-//    cameraMatrix.at<Float64>(2,2) = intrinsics.columns[2][2];
-//
-//    //Assume 0 distortions
-//    cv::Mat distCoeffs = cv::Mat::zeros(5, 1, CV_64F);
-//
-//
-//    cv::Ptr<cv::aruco::Dictionary> dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
-//
-//    aruco::detectMarkers(image, dictionary, markerCorners, markerIds);
-//    aruco::estimatePoseSingleMarkers(markerCorners, markerSize, cameraMatrix, distCoeffs, rotationVectors, translationVectors);
-//
-//    int i = 0;
-//    std::vector<int>::iterator it;
-//
-//    for (i=0, it = markerIds.begin(); it != markerIds.end(); it++,i++)
-//    {
-//        vector<cv::Point3f> objpoints = markerIds[*it];
-//
-//        it->get3DPoints(markerSize);
-//
-//    }
-//
-//}
-
-+ (MarkerPose) findPose:(CVPixelBufferRef)pixelBuffer withIntrinsics:(matrix_float3x3)intrinsics andMarkerSize:(Float64)markerSize {
++ (MarkerPose) findPose:(CVPixelBufferRef)pixelBuffer withIntrinsics:(matrix_float3x3)intrinsics andMarkerSize:(Float64)markerSize imageDownsample:(float)scale {
     
     cv::Mat intrinMat(3,3,CV_64F);
     cv::Mat projectionMat = cv::Mat::zeros(3,3, CV_64F);
@@ -214,7 +174,6 @@ using namespace cv;
     intrinMat.at<Float64>(2,1) = intrinsics.columns[1][2];
     intrinMat.at<Float64>(2,2) = intrinsics.columns[2][2];
     
-    
     vector< int > ids;
     vector< vector< Point2f > > corners, rejected;
     vector< Vec3d > rvecs, tvecs;
@@ -228,7 +187,13 @@ using namespace cv;
 
     detectorParams->cornerRefinementMethod = aruco::CORNER_REFINE_SUBPIX; // do corner refinement in markers
     
-    image = [OpenCVWrapper convertPixelBufferToOpenCV:pixelBuffer];
+    if ( scale != 1.0 ) {
+        int out_width = 1280 / scale;
+        image = get_downsampled_cv_mat(pixelBuffer, &dest_buffer, out_width);
+    } else {
+        image = [OpenCVWrapper convertPixelBufferToOpenCV:pixelBuffer];
+    }
+    
 
     cv::Ptr<cv::aruco::Dictionary> dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
 
@@ -294,33 +259,6 @@ using namespace cv;
     cv::Mat mat(height, width, CV_8UC1, baseaddress, 0);
     CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
     return mat;
-}
-
-+ (UIImage *)findMarkersPB:(CVPixelBufferRef)pixelBuffer {
-    Mat original = [OpenCVWrapper convertPixelBufferToOpenCV:pixelBuffer];
-    Mat output;
-    
-    Mat gray;
-    
-   // cvtColor(original, gray, COLOR_BGR2GRAY);
-    
-    vector<int> markerIds;
-    vector<vector<Point2f>> markerCorners;
-    
-    Ptr<aruco::Dictionary> markerDictionary = getPredefinedDictionary(aruco::DICT_6X6_50);
-    
-    Ptr<aruco::DetectorParameters> params = aruco::DetectorParameters::create();
-    
-  //  aruco::detectMarkers(gray, markerDictionary, markerCorners, markerIds, params);
-    aruco::detectMarkers(original, markerDictionary, markerCorners, markerIds, params);
-    
-    cout << markerIds.size() << std::endl;
-    
-   cv::cvtColor(original, output, COLOR_BGRA2BGR);
-    
-    aruco::drawDetectedMarkers(output, markerCorners, markerIds, Scalar(0, 255, 0));
-    
-    return [OpenCVWrapper UIImageFromCVMat:output];
 }
 
 + (void) isThisWorking {
