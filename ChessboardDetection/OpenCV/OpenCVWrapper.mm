@@ -163,17 +163,28 @@ static vImage_Buffer dest_buffer = {NULL, 0, 0, 0};
     
     cv::Mat intrinMat(3,3,CV_64F);
     cv::Mat projectionMat = cv::Mat::zeros(3,3, CV_64F);
+    
+    float fx = intrinsics.columns[0].x;
+    float fy = intrinsics.columns[1].y;
+    
+    float ox = intrinsics.columns[2].x;
+    float oy = intrinsics.columns[2].y;
 
-    intrinMat.at<Float64>(0,0) = intrinsics.columns[0][0];
+    //intrinMat.at<Float64>(0,0) = intrinsics.columns[0][0];
+    intrinMat.at<Float64>(0,0) = fx / scale;
     intrinMat.at<Float64>(0,1) = intrinsics.columns[1][0];
-    intrinMat.at<Float64>(0,2) = intrinsics.columns[2][0];
+//  intrinMat.at<Float64>(0,2) = intrinsics.columns[2][0];
+    intrinMat.at<Float64>(0,2) = ox / scale;
     intrinMat.at<Float64>(1,0) = intrinsics.columns[0][1];
-    intrinMat.at<Float64>(1,1) = intrinsics.columns[1][1];
-    intrinMat.at<Float64>(1,2) = intrinsics.columns[2][1];
+//  intrinMat.at<Float64>(1,1) = intrinsics.columns[1][1];
+    intrinMat.at<Float64>(1,1) = fy / scale;
+//  intrinMat.at<Float64>(1,2) = intrinsics.columns[2][1];
+    intrinMat.at<Float64>(1,2) = oy / scale;
     intrinMat.at<Float64>(2,0) = intrinsics.columns[0][2];
     intrinMat.at<Float64>(2,1) = intrinsics.columns[1][2];
     intrinMat.at<Float64>(2,2) = intrinsics.columns[2][2];
     
+
     vector< int > ids;
     vector< vector< Point2f > > corners, rejected;
     vector< Vec3d > rvecs, tvecs;

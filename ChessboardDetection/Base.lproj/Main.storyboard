@@ -67,9 +67,6 @@
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bco-bA-yJj">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </arscnView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TZK-Dz-0UV">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l5M-9V-FUG">
                                 <rect key="frame" x="152.5" y="587" width="70" height="30"/>
                                 <constraints>
@@ -80,24 +77,45 @@
                                     <action selector="goTOOpenCV:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Uqf-x3-Dg0"/>
                                 </connections>
                             </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2.5" minValue="1" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="ane-Gu-U5G">
+                                <rect key="frame" x="20.5" y="548" width="334" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="330" id="6m6-G9-EVv"/>
+                                    <constraint firstAttribute="height" constant="29" id="umU-CX-eco"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="sliderValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="qzj-qC-Rug"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mUY-8a-KAH">
+                                <rect key="frame" x="137.5" y="517" width="100" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="erG-lA-h9n"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="TZK-Dz-0UV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="G1z-8g-2rf"/>
+                            <constraint firstItem="mUY-8a-KAH" firstAttribute="centerX" secondItem="bco-bA-yJj" secondAttribute="centerX" id="6Qf-iY-NuR"/>
                             <constraint firstItem="bco-bA-yJj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="GKv-oh-4QR"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="l5M-9V-FUG" secondAttribute="bottom" constant="50" id="JLJ-5o-FLm"/>
-                            <constraint firstItem="TZK-Dz-0UV" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Mk6-qY-LYy"/>
+                            <constraint firstItem="ane-Gu-U5G" firstAttribute="top" secondItem="mUY-8a-KAH" secondAttribute="bottom" constant="10" id="LAD-WG-TY4"/>
+                            <constraint firstItem="ane-Gu-U5G" firstAttribute="centerX" secondItem="l5M-9V-FUG" secondAttribute="centerX" id="XPS-Qz-4ed"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bco-bA-yJj" secondAttribute="trailing" id="brl-tn-o90"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="TZK-Dz-0UV" secondAttribute="bottom" id="ccI-Tt-4q3"/>
+                            <constraint firstItem="l5M-9V-FUG" firstAttribute="top" secondItem="ane-Gu-U5G" secondAttribute="bottom" constant="10" id="dJm-Ru-7Lg"/>
                             <constraint firstItem="l5M-9V-FUG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gxc-ee-8ve"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TZK-Dz-0UV" secondAttribute="trailing" id="iGJ-a1-8Wb"/>
+                            <constraint firstItem="bco-bA-yJj" firstAttribute="centerX" secondItem="ane-Gu-U5G" secondAttribute="centerX" id="kSF-i9-fp9"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="bco-bA-yJj" secondAttribute="bottom" id="rMg-td-De7"/>
                             <constraint firstItem="bco-bA-yJj" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="twh-6b-x3U"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="mainImage" destination="TZK-Dz-0UV" id="MiA-ST-AVC"/>
+                        <outlet property="downSample" destination="ane-Gu-U5G" id="5rs-vx-38k"/>
+                        <outlet property="downSampleLabel" destination="mUY-8a-KAH" id="Wx5-qp-c6y"/>
                         <outlet property="sceneView" destination="bco-bA-yJj" id="qap-Yq-ccN"/>
                         <segue destination="uwy-2N-CGy" kind="presentation" identifier="goToCV" id="aWn-s5-qRi"/>
                     </connections>

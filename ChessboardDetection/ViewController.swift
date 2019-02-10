@@ -15,11 +15,14 @@ let MARKER_SIZE_IN_METERS : CGFloat = 0.035;
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     @IBOutlet weak var sceneView: ARSCNView!
-    @IBOutlet weak var mainImage: UIImageView!
-    
+    @IBOutlet weak var downSample: UISlider!
+    @IBOutlet weak var downSampleLabel: UILabel!
     
     var showCV: Bool = false
     var lastDistance : Float! = nil
+    
+    var imageDownsample : Float32? = nil
+
     
     var lastPos : SCNVector3! = nil
     var lastFoundPos : SCNVector3! = nil
@@ -33,8 +36,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     var displayLink: CADisplayLink?
     
     override func viewDidLoad() {
-        print("view did load")
         super.viewDidLoad()
+        
+        imageDownsample = downSample.value
+        
+        downSampleLabel.text = "\(imageDownsample!)"
+
         
         sceneView.session.delegate = self
         
@@ -46,6 +53,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     private func useArKit() {
+        sceneView.debugOptions = ARSCNDebugOptions.showWorldOrigin
         let configuration = ARWorldTrackingConfiguration()
         self.sceneView.session.run(configuration)
     }
@@ -54,11 +62,21 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         performSegue(withIdentifier: "goToCV", sender: self)
     }
     
+    @IBAction func sliderValueChanged(_ sender: UISlider) {
+        let step: Float = 0.2
+        let roundedValue = round(sender.value / step) * step
+        sender.value = roundedValue
+        downSampleLabel.text = "\(sender.value)"
+        imageDownsample = sender.value
+    }
+    
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
        updateMarker()
     }
     
     func getBall(color : UIColor, radius: CGFloat = 0.01) -> SCNNode {
+        
+        print(radius)
         
         //let bw : CGFloat = 0.01
         let boxGeometry = SCNSphere(radius:radius)
@@ -82,13 +100,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         
         guard let camera = self.sceneView.pointOfView else { return }
         
-        let imageDownsample : Float32 = 2.5
-
-        let markerLengthMM : Float64 = 3.5
+        let markerLengthMM : Float64 = 63.5
         
         let markerLength : Float64 = markerLengthMM / 1000.0
         
-        let result = OpenCVWrapper.findPose(pixelBuffer, withIntrinsics: intrinsics, andMarkerSize: markerLength, imageDownsample: imageDownsample)
+        let result = OpenCVWrapper.findPose(pixelBuffer, withIntrinsics: intrinsics, andMarkerSize: markerLength, imageDownsample: self.imageDownsample!)
         
         if result.found {
             
@@ -98,7 +114,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                 lastDistance = dist
             }
             
-            lastDistance - (lastDistance - dist) * 0.1
+         lastDistance =  lastDistance - (lastDistance - dist) * 0.1
             
             let posInCam = SCNVector3(-result.tvec.y, -result.tvec.x, lastDistance )
             
