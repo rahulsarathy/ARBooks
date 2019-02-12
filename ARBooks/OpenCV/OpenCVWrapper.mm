@@ -12,7 +12,6 @@
 #import "opencv2/aruco.hpp"
 #include <iostream>
 #include <vector>
-#include "CVUtils.h"
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -32,9 +31,6 @@ using namespace cv;
 
 
 @implementation OpenCVWrapper
-
-static vImage_Buffer dest_buffer = {NULL, 0, 0, 0};
-
 
 + (Mat)cvMatFromUIImage:(UIImage *)image
 {
@@ -164,106 +160,7 @@ static vImage_Buffer dest_buffer = {NULL, 0, 0, 0};
     return [OpenCVWrapper UIImageFromCVMat:output];
 }
 
-+ (MarkerPose) findPose:(CVPixelBufferRef)pixelBuffer withIntrinsics:(matrix_float3x3)intrinsics andMarkerSize:(Float64)markerSize imageDownsample:(float)scale {
-    
-    cv::Mat intrinMat(3,3,CV_64F);
-    cv::Mat projectionMat = cv::Mat::zeros(3,3, CV_64F);
-    
-    float fx = intrinsics.columns[0].x;
-    float fy = intrinsics.columns[1].y;
-    
-    float ox = intrinsics.columns[2].x;
-    float oy = intrinsics.columns[2].y;
 
-    //intrinMat.at<Float64>(0,0) = intrinsics.columns[0][0];
-    intrinMat.at<Float64>(0,0) = fx / scale;
-    intrinMat.at<Float64>(0,1) = intrinsics.columns[1][0];
-//  intrinMat.at<Float64>(0,2) = intrinsics.columns[2][0];
-    intrinMat.at<Float64>(0,2) = ox / scale;
-    intrinMat.at<Float64>(1,0) = intrinsics.columns[0][1];
-//  intrinMat.at<Float64>(1,1) = intrinsics.columns[1][1];
-    intrinMat.at<Float64>(1,1) = fy / scale;
-//  intrinMat.at<Float64>(1,2) = intrinsics.columns[2][1];
-    intrinMat.at<Float64>(1,2) = oy / scale;
-    intrinMat.at<Float64>(2,0) = intrinsics.columns[0][2];
-    intrinMat.at<Float64>(2,1) = intrinsics.columns[1][2];
-    intrinMat.at<Float64>(2,2) = intrinsics.columns[2][2];
-    
-
-    vector< int > ids;
-    vector< vector< Point2f > > corners, rejected;
-    vector< Vec3d > rvecs, tvecs;
-    
-    MarkerPose result; 
-    result.found = false;
-    
-    Mat image;
-    
-    Ptr<aruco::DetectorParameters> detectorParams = aruco::DetectorParameters::create();
-
-    detectorParams->cornerRefinementMethod = aruco::CORNER_REFINE_SUBPIX; // do corner refinement in markers
-    
-    if ( scale != 1.0 ) {
-        int out_width = 1280 / scale;
-        image = get_downsampled_cv_mat(pixelBuffer, &dest_buffer, out_width);
-    } else {
-        image = [OpenCVWrapper convertPixelBufferToOpenCV:pixelBuffer];
-    }
-    
-
-    cv::Ptr<cv::aruco::Dictionary> dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
-
-    aruco::detectMarkers(image, dictionary, corners, ids, detectorParams, rejected);
-    
-    bool estimatePose = true;
-    
-    if(estimatePose && ids.size() > 0) {
-        aruco::estimatePoseSingleMarkers(corners, markerSize, intrinMat, cv::noArray(), rvecs, tvecs);
-    }
-    
-    if (ids.size() > 0) {
-        if (estimatePose) {
-            for (unsigned int i = 0; i < ids.size(); i++)
-            {
-                result.found = true;
-                
-                result.tvec = SCNVector3Make(tvecs[i][0], tvecs[i][1], tvecs[i][2]);
-                result.rvec = SCNVector3Make(rvecs[i][0], rvecs[i][1], rvecs[i][2]);
-                
-                Mat expandedR;
-                
-                Rodrigues(rvecs[i], expandedR);
-                
-                result.rotMat = SCNMatrix4Identity;
-                
-                result.id = ids[i];
-                
-                // x and y swapped, z
-                // col 1
-                result.rotMat.m11 = -expandedR.at<double>(1,0);
-                result.rotMat.m12 = -expandedR.at<double>(0,0);
-                result.rotMat.m13 = -expandedR.at<double>(2,0);
-                
-                // col 2
-                result.rotMat.m21 = -expandedR.at<double>(1,1);
-                result.rotMat.m22 = -expandedR.at<double>(0,1);
-                result.rotMat.m23 = -expandedR.at<double>(2,1);
-                
-                // col 3
-                result.rotMat.m31 = -expandedR.at<double>(1,2);
-                result.rotMat.m32 = -expandedR.at<double>(0,2);
-                result.rotMat.m33 = -expandedR.at<double>(2,2);
-                
-                assert(expandedR.type() == CV_64F);
-                
-                return result;
-            }
-        }
-    }
-    
-    return result;
-    
-}
 
 +(SCNMatrix4) transformMatrixFromPixelBuffer:(CVPixelBufferRef)pixelBuffer withIntrinsics:(matrix_float3x3)intrinsics andMarkerSize:(Float64)markerSize {
 
