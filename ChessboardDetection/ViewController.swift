@@ -31,6 +31,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
 
     var ballNode : SCNNode! = nil
+    var planeNode : SCNNode! = nil
+    private var originNode = SCNNode()
 
     
     var displayLink: CADisplayLink?
@@ -46,6 +48,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         sceneView.session.delegate = self
         
         self.useArKit()
+        
+        planeNode = self.createPlane()
         
         self.ballNode = getBall(color: UIColor.green.withAlphaComponent(0.8), radius: 0.005)
         self.sceneView.scene.rootNode.addChildNode(ballNode)
@@ -71,7 +75,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
-       updateMarker()
+      // updateMarker()
+        localizeMarker()
     }
     
     func getBall(color : UIColor, radius: CGFloat = 0.01) -> SCNNode {
@@ -88,6 +93,47 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         
         return boxNode
         
+    }
+    
+    private func localizeMarker() {
+        
+        guard let frame = self.sceneView.session.currentFrame else { return }
+        
+        let pixelBuffer = frame.capturedImage
+        
+        let intrinsics = frame.camera.intrinsics
+        
+        let transMatrix = OpenCVWrapper.transformMatrix(from: pixelBuffer, withIntrinsics: intrinsics, andMarkerSize: Float64(MARKER_SIZE_IN_METERS));
+        
+        if (SCNMatrix4IsIdentity(transMatrix)) {
+            print("no marker")
+            return
+        }
+        
+        let cameraTransform = SCNMatrix4.init(frame.camera.transform);
+        //Multiply camera current position with translation matrix
+        let targTransform = SCNMatrix4Mult(transMatrix, cameraTransform);
+        
+        originNode.setWorldTransform(targTransform)
+        if !sceneView.scene.rootNode.childNodes.contains(originNode)
+        {
+            sceneView.scene.rootNode.addChildNode(originNode)
+        }
+        if !(originNode.childNodes.contains(planeNode))
+        {
+            originNode.addChildNode(planeNode)
+        }
+        //ballNode.position = targTransformlin
+    }
+    
+    private func createPlane() -> SCNNode {
+        let plane = SCNPlane(width: MARKER_SIZE_IN_METERS, height: MARKER_SIZE_IN_METERS)
+        let material = SCNMaterial()
+        material.diffuse.contents = UIColor.blue
+        plane.materials = [material]
+        let planeNode = SCNNode(geometry: plane)
+       // planeNode.eulerAngles.x = .pi / 2
+        return planeNode
     }
     
     private func updateMarker() {
@@ -121,6 +167,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             let camMat = SCNMatrix4ToGLKMatrix4(camera.worldTransform)
             
             let worldPos = SCNVector3FromGLKVector3(GLKMatrix4MultiplyVector3WithTranslation(camMat, SCNVector3ToGLKVector3(posInCam)))
+
             
             let rotMat = result.rotMat
             
@@ -139,7 +186,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             lastFoundRotMat = worldRot
             
             lastFoundxDir = xWorldDir
-            
             
         }
         

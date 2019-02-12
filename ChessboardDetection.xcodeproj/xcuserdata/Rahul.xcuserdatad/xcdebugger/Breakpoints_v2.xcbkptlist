@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ChessboardDetection/OpenCV/OpenCVWrapper.mm"
-            timestampString = "571530982.499204"
+            timestampString = "571636850.888659"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "274"
-            endingLineNumber = "274"
+            startingLineNumber = "377"
+            endingLineNumber = "377"
             landmarkName = "OpenCVWrapper"
             landmarkType = "3">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ChessboardDetection/OpenCV/OpenCVWrapper.mm"
-            timestampString = "571530982.4993041"
+            timestampString = "571636850.888731"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "274"
-            endingLineNumber = "274"
+            startingLineNumber = "377"
+            endingLineNumber = "377"
             landmarkName = "OpenCVWrapper"
             landmarkType = "3">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ChessboardDetection/OpenCV/OpenCVWrapper.mm"
-            timestampString = "571530982.499365"
+            timestampString = "571636850.88878"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "274"
-            endingLineNumber = "274"
+            startingLineNumber = "377"
+            endingLineNumber = "377"
             landmarkName = "OpenCVWrapper"
             landmarkType = "3">
          </BreakpointContent>
