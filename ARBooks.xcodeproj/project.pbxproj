@@ -24,7 +24,7 @@
 
 /* Begin PBXFileReference section */
 		B72419AD220A8E3100C196C3 /* SCNVector3+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extensions.swift"; sourceTree = "<group>"; };
-		B7269D142204BFE700DB29B3 /* ChessboardDetection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessboardDetection.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7269D142204BFE700DB29B3 /* ARBooks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARBooks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7269D172204BFE700DB29B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B7269D192204BFE700DB29B3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B7269D1C2204BFE700DB29B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -60,7 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				B7269D2E2204C1AD00DB29B3 /* Frameworks */,
-				B7269D162204BFE700DB29B3 /* ChessboardDetection */,
+				B7269D162204BFE700DB29B3 /* ARBooks */,
 				B7269D152204BFE700DB29B3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -68,12 +68,12 @@
 		B7269D152204BFE700DB29B3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B7269D142204BFE700DB29B3 /* ChessboardDetection.app */,
+				B7269D142204BFE700DB29B3 /* ARBooks.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B7269D162204BFE700DB29B3 /* ChessboardDetection */ = {
+		B7269D162204BFE700DB29B3 /* ARBooks */ = {
 			isa = PBXGroup;
 			children = (
 				B7269D172204BFE700DB29B3 /* AppDelegate.swift */,
@@ -88,7 +88,7 @@
 				B7269D232204BFE800DB29B3 /* Info.plist */,
 				B7D8F15C220E2FF5002C21DF /* OpenCVViewController.swift */,
 			);
-			path = ChessboardDetection;
+			path = ARBooks;
 			sourceTree = "<group>";
 		};
 		B7269D292204C18300DB29B3 /* OpenCV */ = {
@@ -123,9 +123,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B7269D132204BFE700DB29B3 /* ChessboardDetection */ = {
+		B7269D132204BFE700DB29B3 /* ARBooks */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B7269D262204BFE800DB29B3 /* Build configuration list for PBXNativeTarget "ChessboardDetection" */;
+			buildConfigurationList = B7269D262204BFE800DB29B3 /* Build configuration list for PBXNativeTarget "ARBooks" */;
 			buildPhases = (
 				B7269D102204BFE700DB29B3 /* Sources */,
 				B7269D112204BFE700DB29B3 /* Frameworks */,
@@ -135,9 +135,9 @@
 			);
 			dependencies = (
 			);
-			name = ChessboardDetection;
+			name = ARBooks;
 			productName = ChessboardDetection;
-			productReference = B7269D142204BFE700DB29B3 /* ChessboardDetection.app */;
+			productReference = B7269D142204BFE700DB29B3 /* ARBooks.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -156,7 +156,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B7269D0F2204BFE700DB29B3 /* Build configuration list for PBXProject "ChessboardDetection" */;
+			buildConfigurationList = B7269D0F2204BFE700DB29B3 /* Build configuration list for PBXProject "ARBooks" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -169,7 +169,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B7269D132204BFE700DB29B3 /* ChessboardDetection */,
+				B7269D132204BFE700DB29B3 /* ARBooks */,
 			);
 		};
 /* End PBXProject section */
@@ -352,14 +352,14 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				INFOPLIST_FILE = ChessboardDetection/Info.plist;
+				INFOPLIST_FILE = ARBooks/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.ChessboardDetection;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "ChessboardDetection/OpenCV/ChessboardDetection-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "ARBooks/OpenCV/ChessboardDetection-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -377,14 +377,14 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				INFOPLIST_FILE = ChessboardDetection/Info.plist;
+				INFOPLIST_FILE = ARBooks/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.ChessboardDetection;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "ChessboardDetection/OpenCV/ChessboardDetection-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "ARBooks/OpenCV/ChessboardDetection-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -393,7 +393,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B7269D0F2204BFE700DB29B3 /* Build configuration list for PBXProject "ChessboardDetection" */ = {
+		B7269D0F2204BFE700DB29B3 /* Build configuration list for PBXProject "ARBooks" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B7269D242204BFE800DB29B3 /* Debug */,
@@ -402,7 +402,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B7269D262204BFE800DB29B3 /* Build configuration list for PBXNativeTarget "ChessboardDetection" */ = {
+		B7269D262204BFE800DB29B3 /* Build configuration list for PBXNativeTarget "ARBooks" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B7269D272204BFE800DB29B3 /* Debug */,

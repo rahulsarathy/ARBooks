@@ -14,9 +14,10 @@ class BookPage: SCNNode {
     private let planeNode: SCNPlane
     
     init(width:CGFloat, height: CGFloat) {
-        planeNode = SCNPlane(width: width, height: height)
-        self.renderSelf();
+        self.planeNode = SCNPlane(width: width, height: height)
         super.init();
+        self.renderSelf();
+
     }
     
     private func renderSelf() {
