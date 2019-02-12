@@ -16,9 +16,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     @IBOutlet weak var sceneView: ARSCNView!
     
-    var showCV: Bool = false
+    var showPlane: Bool = false
 
-    var ballNode : SCNNode! = nil
     var myPage : BookPage! = nil
     var planeNode : SCNNode! = nil
     private var originNode = SCNNode()
@@ -34,11 +33,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.useArKit()
         
        myPage = BookPage(width: MARKER_SIZE_IN_METERS, height: MARKER_SIZE_IN_METERS)
-       // myPage.name = "myPage"
-        self.planeNode = createPlane()
         
-        self.ballNode = getBall(color: UIColor.green.withAlphaComponent(0.8), radius: 0.005)
-        self.sceneView.scene.rootNode.addChildNode(ballNode)
 
     }
     
@@ -56,23 +51,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
       // updateMarker()
         localizeMarker()
     }
-    
-    func getBall(color : UIColor, radius: CGFloat = 0.01) -> SCNNode {
-        
-        print(radius)
-        
-        //let bw : CGFloat = 0.01
-        let boxGeometry = SCNSphere(radius:radius)
-        let boxNode = SCNNode(geometry: boxGeometry)
-        
-        //boxNode.worldPosition = initialPoint!
-        boxGeometry.firstMaterial?.diffuse.contents = color
-        boxGeometry.firstMaterial?.lightingModel = .constant
-        
-        return boxNode
-        
-    }
-    
+
     private func localizeMarker() {
         
         guard let frame = self.sceneView.session.currentFrame else { return }
@@ -97,12 +76,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         {
             sceneView.scene.rootNode.addChildNode(originNode)
         }
-        if !(originNode.childNodes.contains(planeNode))
+        if !(showPlane)
         {
-            originNode.addChildNode(planeNode)
             originNode.addChildNode(myPage)
+            showPlane = true
         }
-        //ballNode.position = targTransformlin
     }
     
     private func createPlane() -> SCNNode {
