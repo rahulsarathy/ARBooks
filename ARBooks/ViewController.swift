@@ -31,6 +31,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
 
     var ballNode : SCNNode! = nil
+    var myPage : BookPage! = nil
     var planeNode : SCNNode! = nil
     private var originNode = SCNNode()
 
@@ -49,7 +50,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         
         self.useArKit()
         
-        planeNode = self.createPlane()
+       myPage = BookPage(width: MARKER_SIZE_IN_METERS, height: MARKER_SIZE_IN_METERS)
+       // myPage.name = "myPage"
+        self.planeNode = createPlane()
         
         self.ballNode = getBall(color: UIColor.green.withAlphaComponent(0.8), radius: 0.005)
         self.sceneView.scene.rootNode.addChildNode(ballNode)
@@ -122,6 +125,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         if !(originNode.childNodes.contains(planeNode))
         {
             originNode.addChildNode(planeNode)
+            originNode.addChildNode(myPage)
         }
         //ballNode.position = targTransformlin
     }
@@ -132,9 +136,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         material.diffuse.contents = UIColor.blue
         plane.materials = [material]
         let planeNode = SCNNode(geometry: plane)
-       // planeNode.eulerAngles.x = .pi / 2
+        // planeNode.eulerAngles.x = .pi / 2
         return planeNode
     }
+    
     
     private func updateMarker() {
         

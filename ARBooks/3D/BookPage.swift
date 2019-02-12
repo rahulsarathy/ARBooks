@@ -21,7 +21,10 @@ class BookPage: SCNNode {
     }
     
     private func renderSelf() {
-        
+        let mat = SCNMaterial()
+        mat.diffuse.contents = UIColor.white
+        self.geometry = self.planeNode
+        self.geometry?.materials = [mat]
     }
     
     required init?(coder aDecoder: NSCoder) {
