@@ -302,7 +302,7 @@ static vImage_Buffer dest_buffer = {NULL, 0, 0, 0};
         
         cv::Mat rotMat;
         cout << rvecs.size() << endl;
-        cv::Rodrigues(rvecs, rotMat);
+        cv::Rodrigues(rvecs[0], rotMat);
         cv::Mat extrinsics(4, 4, CV_64F);
 
         for( int row = 0; row < rotMat.rows; row++) {

@@ -19,6 +19,7 @@
 		B7D8F15D220E2FF5002C21DF /* OpenCVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D8F15C220E2FF5002C21DF /* OpenCVViewController.swift */; };
 		B7D8F15F220E3B3D002C21DF /* CVUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = B7D8F15E220E3B3D002C21DF /* CVUtils.mm */; };
 		B7D8F162220E3B80002C21DF /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D8F161220E3B80002C21DF /* Accelerate.framework */; };
+		B7D8F19422129448002C21DF /* BookPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D8F19322129448002C21DF /* BookPage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		B7D8F15E220E3B3D002C21DF /* CVUtils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CVUtils.mm; sourceTree = "<group>"; };
 		B7D8F160220E3B4B002C21DF /* CVUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CVUtils.h; sourceTree = "<group>"; };
 		B7D8F161220E3B80002C21DF /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		B7D8F19322129448002C21DF /* BookPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookPage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 			children = (
 				B7269D172204BFE700DB29B3 /* AppDelegate.swift */,
 				B7269D192204BFE700DB29B3 /* ViewController.swift */,
+				B7D8F19222129438002C21DF /* 3D */,
 				B72419AD220A8E3100C196C3 /* SCNVector3+Extensions.swift */,
 				B7269D292204C18300DB29B3 /* OpenCV */,
 				B7269D1B2204BFE700DB29B3 /* Main.storyboard */,
@@ -107,6 +110,14 @@
 				B7269D2F2204C1D700DB29B3 /* opencv2.framework */,
 			);
 			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		B7D8F19222129438002C21DF /* 3D */ = {
+			isa = PBXGroup;
+			children = (
+				B7D8F19322129448002C21DF /* BookPage.swift */,
+			);
+			path = 3D;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,6 +193,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7D8F19422129448002C21DF /* BookPage.swift in Sources */,
 				B7269D1A2204BFE700DB29B3 /* ViewController.swift in Sources */,
 				B7D8F15D220E2FF5002C21DF /* OpenCVViewController.swift in Sources */,
 				B7D8F15F220E3B3D002C21DF /* CVUtils.mm in Sources */,

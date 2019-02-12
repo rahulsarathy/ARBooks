@@ -9,7 +9,7 @@
 import UIKit
 import ARKit
 
-let MARKER_SIZE_IN_METERS : CGFloat = 0.035;
+let MARKER_SIZE_IN_METERS : CGFloat = 0.2032;
 
 
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
