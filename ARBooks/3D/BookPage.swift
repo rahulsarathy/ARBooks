@@ -27,6 +27,21 @@ class BookPage: SCNNode {
         self.geometry?.materials = [mat]
     }
     
+    func highlight() {
+        self.runAction(self.imageHighlightAction)
+    }
+    
+    private var imageHighlightAction: SCNAction {
+        return .sequence([
+            .wait(duration: 0.25),
+            .fadeOpacity(to: 0.85, duration: 0.25),
+            .fadeOpacity(to: 0.15, duration: 0.25),
+            .fadeOpacity(to: 0.85, duration: 0.25),
+            // .fadeOut(duration: 0.5),
+            //   .removeFromParentNode()
+            ])
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

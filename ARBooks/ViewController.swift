@@ -22,7 +22,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     var planeNode : SCNNode! = nil
     private var originNode = SCNNode()
 
-    
     var displayLink: CADisplayLink?
     
     override func viewDidLoad() {
@@ -79,6 +78,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         if !(showPlane)
         {
             originNode.addChildNode(myPage)
+            myPage.highlight()
             showPlane = true
         }
     }
