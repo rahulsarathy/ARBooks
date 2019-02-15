@@ -143,8 +143,6 @@ using namespace cv;
 
     aruco::detectMarkers(gray, markerDictionary, markerCorners, markerIds, params);
     
-    cout << markerIds.size() << std::endl;
-    
 //    for (int i = 0; i < markerCorners.size(); i++)
 //    {
 //        for (int j = 0; j < markerCorners[i].size(); j++)
