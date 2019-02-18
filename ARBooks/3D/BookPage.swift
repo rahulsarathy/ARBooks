@@ -11,24 +11,75 @@ import ARKit
 
 class BookPage: SCNNode {
     
-    private var planeNode: SCNNode
-    private var textNode: SCNNode
-    private let text: String
+    private var planeNode: SCNNode = SCNNode()
+    private var definitionPlane: SCNNode = SCNNode()
+    private var definitionText: SCNNode = SCNNode()
+    private var definitionTextNode: SCNText = SCNText()
+    private var textNode: SCNNode = SCNNode()
+    private var text: String = ""
+    private var currentDef: String = ""
     
     private var width: CGFloat
     private var height: CGFloat
+    
+    let app_id = "faa06bfa"
+    let app_key = "a2fe9da627b566e4ce05ca33490639a5"
 
     
     init(width:CGFloat, height: CGFloat, text:String = "") {
-        self.planeNode = SCNNode()
-        self.textNode = SCNNode()
         self.text = text
         self.width = width
         self.height = height
         super.init();
+        
+        getDefinition(word: text)
+        createDefinition3D()
         createPlane(width: width, height: height)
         createText()
+        createDefinitionPlane()
+        
+        self.addChildNode(self.planeNode)
+        self.addChildNode(self.textNode)
+        self.addChildNode(definitionPlane)
+        self.addChildNode(definitionText)
 
+    }
+    
+    private func updateDefinition() {
+        self.definitionTextNode.string = self.currentDef
+        self.definitionText.geometry = definitionTextNode
+    }
+    
+    private func createDefinitionPlane() {
+        let plane = SCNPlane(width: self.width / 2.0, height: self.height)
+        let mat = SCNMaterial()
+        mat.diffuse.contents = UIColor.white
+        self.definitionPlane = SCNNode(geometry: plane)
+        self.definitionPlane.geometry?.materials = [mat]
+    }
+    
+    private func createDefinition3D() {
+        //text
+        let material = SCNMaterial()
+        material.diffuse.contents = UIColor.black
+        self.definitionTextNode = SCNText(string: self.currentDef, extrusionDepth: 1)
+        definitionTextNode.isWrapped = true
+        definitionTextNode.materials = [material]
+        
+        definitionTextNode.flatness = 0.6
+        let myFont = UIFont.systemFont(ofSize: 10, weight: UIFont.Weight.medium)
+        definitionTextNode.font = myFont
+        definitionTextNode.containerFrame.size = CGSize(width: self.getWidth() * 1000 / 2.0, height: self.getHeight() * 1000)
+        
+        let textNode = SCNNode()
+        textNode.geometry = definitionTextNode
+        textNode.position = SCNVector3(x: -0.1, y: -0.1, z: 0.0)
+        //textNode.position = SCNVector3(x: Float(-1 * self.getWidth()/2.0), y: 0.0, z: -0.1)
+        
+        textNode.scale = SCNVector3(x: 0.001, y: 0.001, z: 0.001)
+        // textNode.eulerAngles.x = -.pi/2
+        
+        self.definitionText = textNode
     }
 
     private func createPlane(width: CGFloat, height: CGFloat) {
@@ -83,6 +134,68 @@ class BookPage: SCNNode {
        // textNode.eulerAngles.x = -.pi/2
         
         self.textNode = textNode
+    }
+    
+    func getDefinition(word:String) {
+        let unencoded = "https://od-api.oxforddictionaries.com/api/v1/entries/en/" + word + "/regions=us"
+        let url = NSURL(string: unencoded)!
+        var request = URLRequest(url: url as URL)
+        request.httpMethod = "GET"
+        request.setValue(self.app_id, forHTTPHeaderField: "app_id")
+        request.setValue(self.app_key, forHTTPHeaderField: "app_key")
+        
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            
+            // Check for error
+            if error != nil
+            {
+                print("error=\(error)")
+                return
+            }
+            
+            // Convert server json response to NSDictionary
+            do {
+                if let convertedJsonIntoDict = try JSONSerialization.jsonObject(with: data!, options: []) as? NSDictionary {
+                    if let array = convertedJsonIntoDict["results"] as? [Any]
+                    {
+                        if let results = array.first as? NSDictionary {
+                            if let lexicalEntries = results["lexicalEntries"] as? [Any] {
+                                if let lexicalResults = lexicalEntries.first as? NSDictionary {
+                                    if let entries = lexicalResults["entries"] as? [Any] {
+                                        if let entriesDict = entries.first as? NSDictionary {
+                                            if let senses = entriesDict["senses"] as? [Any]
+                                            {
+                                                if let sensesDict = senses.first as? NSDictionary {
+                                                    if let defArray = sensesDict["short_definitions"] as? [Any]
+                                                    {
+                                                        if let myDef = defArray.first as? String {
+                                                            self.currentDef = myDef
+                                                            DispatchQueue.main.async {
+                                                                self.updateDefinition()
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+            
+        }
+        
+        task.resume()
+        
+        
     }
     
     private var imageHighlightAction: SCNAction {
