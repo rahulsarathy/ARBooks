@@ -31,8 +31,8 @@ class BookPage: SCNNode {
         self.width = width
         self.height = height
         super.init();
-        
-        getDefinition(word: text)
+
+     // getDefinition(word: text)
         createDefinition3D()
         createPlane(width: width, height: height)
         createText()
@@ -41,7 +41,8 @@ class BookPage: SCNNode {
         self.addChildNode(self.planeNode)
         self.addChildNode(self.textNode)
         self.addChildNode(definitionPlane)
-        self.addChildNode(definitionText)
+        self.definitionPlane.addChildNode(self.definitionText)
+     //   self.addChildNode(definitionText)
 
     }
     
@@ -56,6 +57,7 @@ class BookPage: SCNNode {
         mat.diffuse.contents = UIColor.white
         self.definitionPlane = SCNNode(geometry: plane)
         self.definitionPlane.geometry?.materials = [mat]
+        self.definitionPlane.position = SCNVector3(x: -0.17, y: 0.0, z: 0.0)
     }
     
     private func createDefinition3D() {
@@ -73,7 +75,8 @@ class BookPage: SCNNode {
         
         let textNode = SCNNode()
         textNode.geometry = definitionTextNode
-        textNode.position = SCNVector3(x: -0.1, y: -0.1, z: 0.0)
+        
+        textNode.position = SCNVector3(x: -0.05, y: -0.1, z: 0.0)
         //textNode.position = SCNVector3(x: Float(-1 * self.getWidth()/2.0), y: 0.0, z: -0.1)
         
         textNode.scale = SCNVector3(x: 0.001, y: 0.001, z: 0.001)
@@ -120,7 +123,7 @@ class BookPage: SCNNode {
         text.isWrapped = true
         text.materials = [material]
         
-        text.flatness = 0.0
+        text.flatness = 1.5
         let myFont = UIFont.systemFont(ofSize: 10, weight: UIFont.Weight.medium)
         text.font = myFont
         text.containerFrame.size = CGSize(width: self.getWidth() * 1000, height: self.getHeight() * 1000)

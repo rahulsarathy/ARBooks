@@ -24,7 +24,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     let sample1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     
-    let sample = "Oxymoron"
+    let sample = "Oxymoron Heinous Paradigm Paradox Zephyr Milieu"
     
     var currentDef: String? = nil
     var pageText : SCNNode! = nil
@@ -50,7 +50,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                 guard let hitResult = hitResults.first else {
                     return
                 }
-                vibrateWithHaptic()
+               // vibrateWithHaptic()
                 let node = hitResult.node
                 showDefinition(myNode: node)
                // node.geometry?.firstMaterial?.diffuse.contents = UIColor.red
@@ -58,7 +58,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     func showDefinition(myNode: SCNNode) {
-        
+      print(myNode.geometry)
     }
     
     func vibrateWithHaptic() {
