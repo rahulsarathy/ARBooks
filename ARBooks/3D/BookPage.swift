@@ -69,7 +69,7 @@ class BookPage: SCNNode {
         text.isWrapped = true
         text.materials = [material]
         
-        text.flatness = 0.4
+        text.flatness = 0.0
         let myFont = UIFont.systemFont(ofSize: 10, weight: UIFont.Weight.medium)
         text.font = myFont
         text.containerFrame.size = CGSize(width: self.getWidth() * 1000, height: self.getHeight() * 1000)

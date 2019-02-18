@@ -143,14 +143,6 @@ using namespace cv;
 
     aruco::detectMarkers(gray, markerDictionary, markerCorners, markerIds, params);
     
-//    for (int i = 0; i < markerCorners.size(); i++)
-//    {
-//        for (int j = 0; j < markerCorners[i].size(); j++)
-//        {
-//            cout << markerCorners[i][j];
-//        }
-//    }
-    
     cv::cvtColor(original, output, COLOR_BGRA2BGR);
     
     aruco::drawDetectedMarkers(output, markerCorners, markerIds, Scalar(0, 255, 0));
@@ -196,7 +188,6 @@ using namespace cv;
         cv::aruco::estimatePoseSingleMarkers(corners, markerSize, intrinMat, distCoeffs, rvecs, tvecs);
         
         cv::Mat rotMat;
-        cout << rvecs.size() << endl;
         cv::Rodrigues(rvecs[0], rotMat);
         cv::Mat extrinsics(4, 4, CV_64F);
 

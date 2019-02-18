@@ -439,3 +439,5 @@ Frameworks/opencv2.framework/Versions/A/Headers/xphoto/white_balance.hpp
 Frameworks/opencv2.framework/Versions/A/opencv2
 Frameworks/opencv2.framework/Versions/A/Resources/Info.plist
 Frameworks/opencv2.framework/Versions/Current
+*.xcbkptlist
+*.xcbkptlist
