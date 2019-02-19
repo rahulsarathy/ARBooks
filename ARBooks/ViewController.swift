@@ -54,6 +54,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                     return
                 }
                // vibrateWithHaptic()
+               // let node = myPage.findClosest(referencePoint: hitResult.worldCoordinates)
                 let node = myPage.findClosest(referencePoint: hitResult.worldCoordinates)
                 DispatchQueue.main.async {
                     self.marker.isHidden = false
@@ -67,10 +68,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         if let myText = myNode.geometry as? SCNText {
             let findDef: String = myText.string as! String
             myPage.getDefinition(word: findDef)
-            print(myText.string)
-
         }
         else {
+            
             return
         }
         
