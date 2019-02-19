@@ -64,20 +64,50 @@ class BookPage: SCNNode {
         }
     }
     
+//    private func spaceWords() {
+//        var total: Float = 0.0
+//        var currentY: Float = 0.0
+//        var width: Float = 0.0
+//        let spacing: Float = 8
+//        for (index, _) in textNodeArray.enumerated() {
+//            if index == 0 {
+//                textNodeArray[index].position = SCNVector3(x: Float(-1 * self.getWidth()/2.0), y: 0.0, z: 0.0)
+//            }
+//            else {
+//                let width = Float(textNodeArray[index - 1].boundingBox.max.x - textNodeArray[index - 1].boundingBox.min.x)
+//                total += width + spacing
+//                print(total)
+//                let currentWidth = Float(textNodeArray[index].boundingBox.max.x - textNodeArray[index].boundingBox.min.x)
+//                if total + currentWidth > Float(self.getWidth()) {
+//                    currentY -= 0.1
+//                }
+//                textNodeArray[index].position = SCNVector3(x: total/1000 - Float(self.getWidth()/2.0), y: 0.0, z: 0.0)
+//            }
+//        }
+//    }
+    
     private func spaceWords() {
-        var total: Float = 0.0
-        
-        var width: Float = 0.0
+        var currentX: Float = Float(-1 * self.getWidth()/2.0)
+        var currentY:Float =  Float(self.getHeight() / 2.0) - 0.01
         let spacing: Float = 8
+        let spacingY: Float = 5
+        let height: Float = (textNodeArray[0].boundingBox.max.y - textNodeArray[0].boundingBox.min.y)
+        print(self.getWidth())
         for (index, _) in textNodeArray.enumerated() {
             if index == 0 {
-                textNodeArray[index].position = SCNVector3(x: Float(-1 * self.getWidth()/2.0), y: 0.0, z: 0.0)
+                textNodeArray[index].position = SCNVector3(x: currentX, y: currentY, z: 0.0)
             }
             else {
                 let width = Float(textNodeArray[index - 1].boundingBox.max.x - textNodeArray[index - 1].boundingBox.min.x)
-                total += width + spacing
-                print(total)
-                textNodeArray[index].position = SCNVector3(x: total/1000 - Float(self.getWidth()/2.0), y: 0.0, z: 0.0)
+                let currentWidth = Float(textNodeArray[index].boundingBox.max.x - textNodeArray[index].boundingBox.min.x)/1000.0
+                currentX += (width + spacing)/1000
+                print(currentX + currentWidth)
+                if (currentX + currentWidth + Float(self.getWidth() / 2.0)) > Float(self.getWidth())
+                {
+                    currentY -= (height + spacingY) / 1000
+                    currentX = Float(-1 * self.getWidth()/2.0)
+                }
+                textNodeArray[index].position = SCNVector3(x: currentX, y: currentY, z: 0.0)
             }
         }
     }
