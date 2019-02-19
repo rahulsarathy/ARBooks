@@ -45,14 +45,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
-        
         let hitResults = sceneView.hitTest(touch.location(in: sceneView), options: [:])
             if !hitResults.isEmpty {
                 guard let hitResult = hitResults.first else {
                     return
                 }
                // vibrateWithHaptic()
-                let node = hitResult.node
+                let node = myPage.findClosest(referencePoint: hitResult.worldCoordinates)
                 showDefinition(myNode: node)
                // node.geometry?.firstMaterial?.diffuse.contents = UIColor.red
             }
@@ -60,6 +59,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     func showDefinition(myNode: SCNNode) {
       print(myNode.geometry)
+        
     }
     
     func vibrateWithHaptic() {

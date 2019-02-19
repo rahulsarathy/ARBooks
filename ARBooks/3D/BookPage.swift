@@ -37,7 +37,7 @@ class BookPage: SCNNode {
         createDefinition3D()
         createPlane(width: width, height: height)
         //createMainText()
-        self.splitText()
+        self.renderWords()
         createDefinitionPlane()
         
         self.addChildNode(self.planeNode)
@@ -53,10 +53,10 @@ class BookPage: SCNNode {
         for word in textArray {
             textNodeArray.append(self.createText(word: word))
         }
-        renderArray()
     }
     
-    private func renderArray() {
+    private func renderWords() {
+        splitText()
         spaceWords()
         for word in textNodeArray {
             self.planeNode.addChildNode(word)
@@ -85,6 +85,32 @@ class BookPage: SCNNode {
                 textNodeArray[index].position = SCNVector3(x: currentX, y: currentY, z: 0.0)
             }
         }
+    }
+    
+    public func findClosest(referencePoint: SCNVector3) -> SCNNode{
+        var closestIndex = 0
+        var closestLength:Float = 0.0
+        var lengths: Dictionary<Int, Float> = Dictionary<Int, Float>()
+        for (index, word) in textNodeArray.enumerated() {
+            let wordPos = word.worldPosition
+            let distance = SCNVector3(
+                wordPos.x - referencePoint.x,
+                wordPos.y - referencePoint.y,
+                wordPos.z - referencePoint.z
+            )
+            let length = sqrtf(distance.x * distance.x + distance.y * distance.y + distance.z * distance.z)
+            if (index == 0) {
+                closestLength = length
+                closestIndex = 0
+            }
+            else {
+                if length < closestLength {
+                    closestIndex = index
+                    closestLength = length
+                }
+            }
+        }
+        return textNodeArray[closestIndex]
     }
     
     private func createText(word: String) -> SCNNode {
