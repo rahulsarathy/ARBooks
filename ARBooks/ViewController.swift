@@ -41,7 +41,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.useArKit()
         self.createSphere()
         
-        myPage = BookPage(width: MARKER_SIZE_IN_METERS, height: MARKER_SIZE_IN_METERS, text: sample)
+        myPage = BookPage(width: 0.2159, height: 0.2794, text: sample)
         
     }
     

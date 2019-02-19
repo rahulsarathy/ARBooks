@@ -64,8 +64,8 @@ class BookPage: SCNNode {
     }
     
     private func spaceWords() {
-        var currentX: Float = Float(-1 * self.getWidth()/2.0)
-        var currentY:Float =  Float(self.getHeight() / 2.0) - 0.01
+        var currentX: Float = Float(-1 * self.getWidth()/2.0) + 0.006
+        var currentY:Float =  Float(self.getHeight() / 2.0) - 0.015
         var currentZ: Float = 0.1/1000
         let spacing: Float = 8
         let spacingY: Float = 7
@@ -81,7 +81,7 @@ class BookPage: SCNNode {
                 if (currentX + currentWidth + Float(self.getWidth() / 2.0)) > Float(self.getWidth())
                 {
                     currentY -= (height + spacingY) / 1000
-                    currentX = Float(-1 * self.getWidth()/2.0)
+                    currentX = Float(-1 * self.getWidth()/2.0) + 0.006
                 }
                 textNodeArray[index].position = SCNVector3(x: currentX, y: currentY, z: currentZ)
             }
@@ -89,6 +89,7 @@ class BookPage: SCNNode {
     }
     
     public func findClosest(referencePoint: SCNVector3) -> SCNNode{
+        
         var closestIndex = 0
         var closestLength:Float = 0.0
         var lengths: Dictionary<Int, Float> = Dictionary<Int, Float>()
@@ -176,6 +177,8 @@ class BookPage: SCNNode {
 
     private func createPlane(width: CGFloat, height: CGFloat) {
         let plane = SCNPlane(width: width, height: height)
+        plane.cornerRadius = 0.007
+        plane.cornerSegmentCount = 3
         let mat = SCNMaterial()
         mat.diffuse.contents = UIColor.white
         self.planeNode = SCNNode(geometry: plane)
