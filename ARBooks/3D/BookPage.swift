@@ -17,7 +17,7 @@ class BookPage: SCNNode {
     private var definitionTextNode: SCNText = SCNText()
     private var textNode: SCNNode = SCNNode()
     private var text: String = ""
-    private var currentDef: String = ""
+    private var currentDef: String = "testing"
     var textNodeArray: [SCNNode] = []
     
     private var width: CGFloat
@@ -33,18 +33,14 @@ class BookPage: SCNNode {
         self.height = height
         super.init();
 
-     // getDefinition(word: text)
         createDefinition3D()
         createPlane(width: width, height: height)
-        //createMainText()
         self.renderWords()
         createDefinitionPlane()
-        
         self.addChildNode(self.planeNode)
         self.addChildNode(self.textNode)
         self.addChildNode(definitionPlane)
         self.definitionPlane.addChildNode(self.definitionText)
-     //   self.addChildNode(definitionText)
 
     }
     
@@ -66,7 +62,7 @@ class BookPage: SCNNode {
     private func spaceWords() {
         var currentX: Float = Float(-1 * self.getWidth()/2.0) + 0.006
         var currentY:Float =  Float(self.getHeight() / 2.0) - 0.015
-        var currentZ: Float = 0.1/1000
+        let currentZ: Float = 0.1/1000
         let spacing: Float = 8
         let spacingY: Float = 7
         let height: Float = (textNodeArray[0].boundingBox.max.y - textNodeArray[0].boundingBox.min.y)
@@ -144,6 +140,8 @@ class BookPage: SCNNode {
     private func createDefinitionPlane() {
         let plane = SCNPlane(width: self.width / 2.0, height: self.height)
         let mat = SCNMaterial()
+        plane.cornerRadius = 0.005
+        plane.cornerSegmentCount = 3
         mat.diffuse.contents = UIColor.white
         self.definitionPlane = SCNNode(geometry: plane)
         self.definitionPlane.geometry?.materials = [mat]
@@ -166,8 +164,8 @@ class BookPage: SCNNode {
         let textNode = SCNNode()
         textNode.geometry = definitionTextNode
         
-        textNode.position = SCNVector3(x: -0.05, y: -0.1, z: 0.0)
-        //textNode.position = SCNVector3(x: Float(-1 * self.getWidth()/2.0), y: 0.0, z: -0.1)
+      //  textNode.position = SCNVector3(x: -0.05, y: 0.0, z: 0.0)
+        textNode.position = SCNVector3(x: Float(-1 * self.getWidth()/4.0), y:Float(-1 * self.getHeight()/2.0), z:0.0 )
         
         textNode.scale = SCNVector3(x: 0.001, y: 0.001, z: 0.001)
         // textNode.eulerAngles.x = -.pi/2
@@ -230,8 +228,9 @@ class BookPage: SCNNode {
         self.textNode = textNode
     }
     
-    func getDefinition(word:String) {
-        let unencoded = "https://od-api.oxforddictionaries.com/api/v1/entries/en/" + word + "/regions=us"
+    func getDefinition(word: String) {
+        let cleanWord = word.stripped
+        let unencoded = "https://od-api.oxforddictionaries.com/api/v1/entries/en/" + cleanWord + "/regions=us"
         let url = NSURL(string: unencoded)!
         var request = URLRequest(url: url as URL)
         request.httpMethod = "GET"
@@ -305,5 +304,13 @@ class BookPage: SCNNode {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension String {
+    
+    var stripped: String {
+        let okayChars = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890+-=().!_")
+        return self.filter {okayChars.contains($0) }
     }
 }

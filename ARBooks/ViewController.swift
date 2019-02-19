@@ -22,7 +22,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     var showPlane: Bool = false
     
-    let sample = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    let sample = "Venturing into the upper steps of the bond pit was like suddenly getting shipwrecked on a deserted island, all alone and with little access to order flow. I was the Robinson Crusoe of the bond pit. This apt metaphor (the solitary islander who devises a range of strategies for survival amid scarcity, the protagonist of Daniel Defoe’s 1719 novel) runs deeper; it has become a quintessential economic parable—used most notably by the Austrian School economists, who focused so much on the actions of the individual in exchanging one state of affairs for another (what they called “autistic exchange”)."
+    
     
 //    let sample = "Oxymoron Heinous Paradigm Paradox Zephyr Milieu"
     
@@ -64,7 +65,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     func showDefinition(myNode: SCNNode) {
         if let myText = myNode.geometry as? SCNText {
+            let findDef: String = myText.string as! String
+            myPage.getDefinition(word: findDef)
             print(myText.string)
+
+        }
+        else {
+            return
         }
         
     }
