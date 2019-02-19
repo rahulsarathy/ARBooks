@@ -29,15 +29,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     var currentDef: String? = nil
     var pageText : SCNNode! = nil
     var myPage : BookPage! = nil
+    var marker: SCNNode! = nil
     private var originNode = SCNNode()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         sceneView.session.delegate = self
-        sceneView.debugOptions = [ARSCNDebugOptions.showBoundingBoxes]
+     //   sceneView.debugOptions = [ARSCNDebugOptions.showBoundingBoxes]
         
         self.useArKit()
+        self.createSphere()
         
         myPage = BookPage(width: MARKER_SIZE_IN_METERS, height: MARKER_SIZE_IN_METERS, text: sample)
         
@@ -52,14 +54,28 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                 }
                // vibrateWithHaptic()
                 let node = myPage.findClosest(referencePoint: hitResult.worldCoordinates)
+                DispatchQueue.main.async {
+                    self.marker.isHidden = false
+                    self.marker.position = hitResult.worldCoordinates
+                }
                 showDefinition(myNode: node)
-               // node.geometry?.firstMaterial?.diffuse.contents = UIColor.red
             }
     }
     
     func showDefinition(myNode: SCNNode) {
-      print(myNode.geometry)
+        if let myText = myNode.geometry as? SCNText {
+            print(myText.string)
+        }
         
+    }
+    
+    func createSphere() {
+        let sphereGeometry = SCNSphere(radius: 0.001)
+        let sphereNode = SCNNode(geometry: sphereGeometry)
+        sphereNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
+        self.marker = sphereNode
+        self.marker.isHidden = true
+        sceneView.scene.rootNode.addChildNode(marker)
     }
     
     func vibrateWithHaptic() {
@@ -114,6 +130,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             myPage.highlight()
             showPlane = true
         }
+    }
+    
+    private var ballHighlight: SCNAction {
+        return .sequence([
+            .wait(duration: 0.25),
+            .fadeOpacity(to: 0.85, duration: 0.25),
+            .fadeOpacity(to: 0.15, duration: 0.25),
+            .fadeOpacity(to: 0.85, duration: 0.25),
+            // .fadeOut(duration: 0.5),
+            //   .removeFromParentNode()
+            ])
     }
 
 }

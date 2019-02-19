@@ -67,7 +67,7 @@ class BookPage: SCNNode {
         var currentX: Float = Float(-1 * self.getWidth()/2.0)
         var currentY:Float =  Float(self.getHeight() / 2.0) - 0.01
         let spacing: Float = 8
-        let spacingY: Float = 5
+        let spacingY: Float = 7
         let height: Float = (textNodeArray[0].boundingBox.max.y - textNodeArray[0].boundingBox.min.y)
         for (index, _) in textNodeArray.enumerated() {
             if index == 0 {
