@@ -18,6 +18,7 @@ class BookPage: SCNNode {
     private var textNode: SCNNode = SCNNode()
     private var text: String = ""
     private var currentDef: String = ""
+    var textNodeArray: [SCNNode] = []
     
     private var width: CGFloat
     private var height: CGFloat
@@ -35,7 +36,8 @@ class BookPage: SCNNode {
      // getDefinition(word: text)
         createDefinition3D()
         createPlane(width: width, height: height)
-        createText()
+        //createMainText()
+        self.splitText()
         createDefinitionPlane()
         
         self.addChildNode(self.planeNode)
@@ -44,6 +46,61 @@ class BookPage: SCNNode {
         self.definitionPlane.addChildNode(self.definitionText)
      //   self.addChildNode(definitionText)
 
+    }
+    
+    private func splitText() {
+        let textArray = self.text.components(separatedBy: " ")
+        print(textArray)
+        for word in textArray {
+            textNodeArray.append(self.createText(word: word))
+        }
+        renderArray()
+    }
+    
+    private func renderArray() {
+        spaceWords()
+        for word in textNodeArray {
+            self.planeNode.addChildNode(word)
+        }
+    }
+    
+    private func spaceWords() {
+        var total: Float = 0.0
+        
+        var width: Float = 0.0
+        let spacing: Float = 8
+        for (index, _) in textNodeArray.enumerated() {
+            if index == 0 {
+                textNodeArray[index].position = SCNVector3(x: Float(-1 * self.getWidth()/2.0), y: 0.0, z: 0.0)
+            }
+            else {
+                let width = Float(textNodeArray[index - 1].boundingBox.max.x - textNodeArray[index - 1].boundingBox.min.x)
+                total += width + spacing
+                print(total)
+                textNodeArray[index].position = SCNVector3(x: total/1000 - Float(self.getWidth()/2.0), y: 0.0, z: 0.0)
+            }
+        }
+    }
+    
+    private func createText(word: String) -> SCNNode {
+        let material = SCNMaterial()
+        material.diffuse.contents = UIColor.black
+        
+        let text = SCNText(string: word, extrusionDepth: 1)
+        text.isWrapped = true
+        text.materials = [material]
+        text.flatness = 1.5
+        let myFont = UIFont.systemFont(ofSize: 10, weight: UIFont.Weight.medium)
+        text.font = myFont
+       // text.containerFrame.size = CGSize(width: self.getWidth() * 1000 / 2.0, height: self.getHeight() * 1000)
+
+        let textNode = SCNNode()
+        textNode.geometry = text
+    //    textNode.position = SCNVector3(x: Float(-1 * self.getWidth()/2.0), y: 0.0, z: -0.1)
+
+        textNode.scale = SCNVector3(x: 0.001, y: 0.001, z: 0.001)
+
+        return textNode
     }
     
     private func updateDefinition() {
@@ -115,7 +172,7 @@ class BookPage: SCNNode {
         return self.textNode
     }
     
-    private func createText() {
+    private func createMainText() {
         //text
         let material = SCNMaterial()
         material.diffuse.contents = UIColor.black

@@ -35,6 +35,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         super.viewDidLoad()
         
         sceneView.session.delegate = self
+        sceneView.debugOptions = [ARSCNDebugOptions.showBoundingBoxes]
         
         self.useArKit()
         
