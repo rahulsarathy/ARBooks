@@ -66,12 +66,13 @@ class BookPage: SCNNode {
     private func spaceWords() {
         var currentX: Float = Float(-1 * self.getWidth()/2.0)
         var currentY:Float =  Float(self.getHeight() / 2.0) - 0.01
+        var currentZ: Float = 0.1/1000
         let spacing: Float = 8
         let spacingY: Float = 7
         let height: Float = (textNodeArray[0].boundingBox.max.y - textNodeArray[0].boundingBox.min.y)
         for (index, _) in textNodeArray.enumerated() {
             if index == 0 {
-                textNodeArray[index].position = SCNVector3(x: currentX, y: currentY, z: 0.0)
+                textNodeArray[index].position = SCNVector3(x: currentX, y: currentY, z: currentZ)
             }
             else {
                 let width = Float(textNodeArray[index - 1].boundingBox.max.x - textNodeArray[index - 1].boundingBox.min.x)
@@ -82,7 +83,7 @@ class BookPage: SCNNode {
                     currentY -= (height + spacingY) / 1000
                     currentX = Float(-1 * self.getWidth()/2.0)
                 }
-                textNodeArray[index].position = SCNVector3(x: currentX, y: currentY, z: 0.0)
+                textNodeArray[index].position = SCNVector3(x: currentX, y: currentY, z: currentZ)
             }
         }
     }
@@ -191,7 +192,7 @@ class BookPage: SCNNode {
     }
     
     func highlight() {
-        self.planeNode.runAction(self.imageHighlightAction)
+      //  self.planeNode.runAction(self.imageHighlightAction)
     }
     
     func getPlane() -> SCNNode {
