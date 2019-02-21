@@ -11,6 +11,8 @@ import ARKit
 
 class BookPage: SCNNode {
     
+    private var DefinitionUI: DefinitionPlane
+    
     private var planeNode: SCNNode = SCNNode()
     private var definitionPlane: SCNNode = SCNNode()
     private var definitionText: SCNNode = SCNNode()
@@ -25,23 +27,20 @@ class BookPage: SCNNode {
     
     let app_id = "faa06bfa"
     let app_key = "a2fe9da627b566e4ce05ca33490639a5"
-
     
     init(width:CGFloat, height: CGFloat, text:String = "") {
         self.text = text
         self.width = width
         self.height = height
+        self.DefinitionUI = DefinitionPlane(width: self.width/2.0, height: self.height/2.0, word: "", definition:"")
         super.init();
-
-        createDefinition3D()
+        
         createPlane(width: width, height: height)
         self.renderWords()
-        createDefinitionPlane()
         self.addChildNode(self.planeNode)
         self.addChildNode(self.textNode)
-        self.addChildNode(definitionPlane)
-        self.definitionPlane.addChildNode(self.definitionText)
-
+        self.addChildNode(DefinitionUI)
+        self.DefinitionUI.runAction(slide)
     }
     
     private func splitText() {
@@ -145,47 +144,6 @@ class BookPage: SCNNode {
 
         return textNode
     }
-    
-    private func updateDefinition() {
-        self.definitionTextNode.string = self.currentDef
-        self.definitionText.geometry = definitionTextNode
-    }
-    
-    private func createDefinitionPlane() {
-        let plane = SCNPlane(width: self.width / 2.0, height: self.height)
-        let mat = SCNMaterial()
-        plane.cornerRadius = 0.005
-        plane.cornerSegmentCount = 3
-        mat.diffuse.contents = UIColor.white
-        self.definitionPlane = SCNNode(geometry: plane)
-        self.definitionPlane.geometry?.materials = [mat]
-        self.definitionPlane.position = SCNVector3(x: -0.17, y: 0.0, z: 0.0)
-    }
-    
-    private func createDefinition3D() {
-        //text
-        let material = SCNMaterial()
-        material.diffuse.contents = UIColor.black
-        self.definitionTextNode = SCNText(string: self.currentDef, extrusionDepth: 1)
-        definitionTextNode.isWrapped = true
-        definitionTextNode.materials = [material]
-        
-        definitionTextNode.flatness = 0.6
-        let myFont = UIFont.systemFont(ofSize: 10, weight: UIFont.Weight.medium)
-        definitionTextNode.font = myFont
-        definitionTextNode.containerFrame.size = CGSize(width: self.getWidth() * 1000 / 2.0, height: self.getHeight() * 1000)
-        
-        let textNode = SCNNode()
-        textNode.geometry = definitionTextNode
-        
-      //  textNode.position = SCNVector3(x: -0.05, y: 0.0, z: 0.0)
-        textNode.position = SCNVector3(x: Float(-1 * self.getWidth()/4.0), y:Float(-1 * self.getHeight()/2.0), z:0.0 )
-        
-        textNode.scale = SCNVector3(x: 0.001, y: 0.001, z: 0.001)
-        // textNode.eulerAngles.x = -.pi/2
-        
-        self.definitionText = textNode
-    }
 
     private func createPlane(width: CGFloat, height: CGFloat) {
         let plane = SCNPlane(width: width, height: height)
@@ -279,7 +237,7 @@ class BookPage: SCNNode {
                                                         if let myDef = defArray.first as? String {
                                                             self.currentDef = myDef
                                                             DispatchQueue.main.async {
-                                                                self.updateDefinition()
+                                                               self.DefinitionUI.updateDefinition(word: word, definition: myDef)
                                                             }
                                                         }
                                                     }
@@ -295,13 +253,13 @@ class BookPage: SCNNode {
                 
                 
             } catch let error as NSError {
+                self.DefinitionUI.updateDefinition(word: word, definition: "No Definition Found")
                 print(error.localizedDescription)
             }
             
         }
         
         task.resume()
-        
         
     }
     
@@ -313,6 +271,13 @@ class BookPage: SCNNode {
             .fadeOpacity(to: 0.85, duration: 0.25),
             // .fadeOut(duration: 0.5),
             //   .removeFromParentNode()
+            ])
+    }
+    
+    private var slide: SCNAction {
+        return .sequence([
+            .wait(duration: 0.25),
+            .move(by: SCNVector3(x: -0.2, y: 0.0, z: 0.0), duration: 0.2),
             ])
     }
     

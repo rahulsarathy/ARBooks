@@ -15,6 +15,7 @@
 		B7269D2D2204C19400DB29B3 /* OpenCVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = B7269D2C2204C19400DB29B3 /* OpenCVWrapper.mm */; };
 		B7269D302204C1D700DB29B3 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7269D2F2204C1D700DB29B3 /* opencv2.framework */; };
 		B77849F1220689B20021C0B5 /* IMG_3380.JPG in Resources */ = {isa = PBXBuildFile; fileRef = B77849F0220689B10021C0B5 /* IMG_3380.JPG */; };
+		B77CCEA0221CACBE003D09DC /* DefinitionPlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77CCE9F221CACBE003D09DC /* DefinitionPlane.swift */; };
 		B7D8F15D220E2FF5002C21DF /* OpenCVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D8F15C220E2FF5002C21DF /* OpenCVViewController.swift */; };
 		B7D8F162220E3B80002C21DF /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D8F161220E3B80002C21DF /* Accelerate.framework */; };
 		B7D8F19422129448002C21DF /* BookPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D8F19322129448002C21DF /* BookPage.swift */; };
@@ -33,6 +34,7 @@
 		B7269D2C2204C19400DB29B3 /* OpenCVWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVWrapper.mm; sourceTree = "<group>"; };
 		B7269D2F2204C1D700DB29B3 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		B77849F0220689B10021C0B5 /* IMG_3380.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_3380.JPG; sourceTree = "<group>"; };
+		B77CCE9F221CACBE003D09DC /* DefinitionPlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionPlane.swift; sourceTree = "<group>"; };
 		B7D8F15C220E2FF5002C21DF /* OpenCVViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCVViewController.swift; sourceTree = "<group>"; };
 		B7D8F161220E3B80002C21DF /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		B7D8F19322129448002C21DF /* BookPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookPage.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				B7D8F19322129448002C21DF /* BookPage.swift */,
+				B77CCE9F221CACBE003D09DC /* DefinitionPlane.swift */,
 			);
 			path = 3D;
 			sourceTree = "<group>";
@@ -188,6 +191,7 @@
 				B7D8F19422129448002C21DF /* BookPage.swift in Sources */,
 				B7269D1A2204BFE700DB29B3 /* ViewController.swift in Sources */,
 				B7D8F15D220E2FF5002C21DF /* OpenCVViewController.swift in Sources */,
+				B77CCEA0221CACBE003D09DC /* DefinitionPlane.swift in Sources */,
 				B7269D182204BFE700DB29B3 /* AppDelegate.swift in Sources */,
 				B7269D2D2204C19400DB29B3 /* OpenCVWrapper.mm in Sources */,
 			);
