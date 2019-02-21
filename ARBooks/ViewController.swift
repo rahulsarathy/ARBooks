@@ -16,16 +16,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     @IBOutlet weak var sceneView: ARSCNView!
     
-    @IBOutlet weak var xValue: UITextField!
-    @IBOutlet weak var yValue: UITextField!
-    @IBOutlet weak var zValue: UITextField!
-    
     var showPlane: Bool = false
     
     let sample = "Venturing into the upper steps of the bond pit was like suddenly getting shipwrecked on a deserted island, all alone and with little access to order flow. I was the Robinson Crusoe of the bond pit. This apt metaphor (the solitary islander who devises a range of strategies for survival amid scarcity, the protagonist of Daniel Defoe’s 1719 novel) runs deeper; it has become a quintessential economic parable—used most notably by the Austrian School economists, who focused so much on the actions of the individual in exchanging one state of affairs for another (what they called “autistic exchange”)."
-    
-    
-//    let sample = "Oxymoron Heinous Paradigm Paradox Zephyr Milieu"
     
     var currentDef: String? = nil
     var pageText : SCNNode! = nil
@@ -37,13 +30,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         super.viewDidLoad()
         
         sceneView.session.delegate = self
-     //   sceneView.debugOptions = [ARSCNDebugOptions.showBoundingBoxes]
+     // sceneView.debugOptions = [ARSCNDebugOptions.showBoundingBoxes]
         
         self.useArKit()
         self.createSphere()
         
         myPage = BookPage(width: 0.2159, height: 0.2794, text: sample)
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -53,24 +45,25 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                 guard let hitResult = hitResults.first else {
                     return
                 }
-               // vibrateWithHaptic()
-               // let node = myPage.findClosest(referencePoint: hitResult.worldCoordinates)
-                let node = myPage.findClosest(referencePoint: hitResult.worldCoordinates)
-                DispatchQueue.main.async {
-                    self.marker.isHidden = false
-                    self.marker.position = hitResult.worldCoordinates
+                var node: SCNNode! = nil
+                
+                node = self.myPage.findClosest(referencePoint: hitResult.worldCoordinates)
+               self.showDefinition(myNode: node)
+
+                self.marker.isHidden = false
+                self.marker.position = hitResult.worldCoordinates
                 }
-                showDefinition(myNode: node)
+        
+                
             }
-    }
     
     func showDefinition(myNode: SCNNode) {
         if let myText = myNode.geometry as? SCNText {
             let findDef: String = myText.string as! String
-            myPage.getDefinition(word: findDef)
+            print(findDef)
+           myPage.getDefinition(word: findDef)
         }
         else {
-            
             return
         }
         
@@ -84,14 +77,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.marker.isHidden = true
         sceneView.scene.rootNode.addChildNode(marker)
     }
-    
-    func vibrateWithHaptic() {
-        let generator = UIImpactFeedbackGenerator(style: .heavy)
-        generator.prepare()
-        
-        generator.impactOccurred()
-    }
-
     
     private func useArKit() {
       //  sceneView.debugOptions = ARSCNDebugOptions.showWorldOrigin
@@ -134,20 +119,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
          //   originNode.addChildNode(myPage.getPlane())
             //originNode.addChildNode(myPage.getText())
             originNode.addChildNode(myPage)
-            myPage.highlight()
             showPlane = true
         }
-    }
-    
-    private var ballHighlight: SCNAction {
-        return .sequence([
-            .wait(duration: 0.25),
-            .fadeOpacity(to: 0.85, duration: 0.25),
-            .fadeOpacity(to: 0.15, duration: 0.25),
-            .fadeOpacity(to: 0.85, duration: 0.25),
-            // .fadeOut(duration: 0.5),
-            //   .removeFromParentNode()
-            ])
     }
 
 }

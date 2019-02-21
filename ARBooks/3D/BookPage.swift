@@ -14,16 +14,14 @@ class BookPage: SCNNode {
     private var DefinitionUI: DefinitionPlane
     
     private var planeNode: SCNNode = SCNNode()
-    private var definitionPlane: SCNNode = SCNNode()
-    private var definitionText: SCNNode = SCNNode()
-    private var definitionTextNode: SCNText = SCNText()
     private var textNode: SCNNode = SCNNode()
     private var text: String = ""
-    private var currentDef: String = "testing"
     var textNodeArray: [SCNNode] = []
     
     private var width: CGFloat
     private var height: CGFloat
+    
+    private var noCorners: Bool = true
     
     let app_id = "faa06bfa"
     let app_key = "a2fe9da627b566e4ce05ca33490639a5"
@@ -107,7 +105,7 @@ class BookPage: SCNNode {
             let dx2 = dx * dx
             let dy2 = dy * dy
             let dz2 = dz * dz
-
+            
             let length = sqrtf(dx2 + dy2 + dz2)
             if index == 0 {
                 closestLength = length
@@ -120,7 +118,7 @@ class BookPage: SCNNode {
                 }
             }
         }
-        textNodeArray[closestIndex].geometry?.firstMaterial?.diffuse.contents = UIColor.red
+        self.textNodeArray[closestIndex].geometry?.firstMaterial?.diffuse.contents = UIColor.red
         return textNodeArray[closestIndex]
     }
     
@@ -147,13 +145,15 @@ class BookPage: SCNNode {
 
     private func createPlane(width: CGFloat, height: CGFloat) {
         let plane = SCNPlane(width: width, height: height)
-        plane.cornerRadius = 0.007
+        if (!noCorners)
+        {
+            plane.cornerRadius = 0.007
+        }
         plane.cornerSegmentCount = 3
         let mat = SCNMaterial()
         mat.diffuse.contents = UIColor.white
         self.planeNode = SCNNode(geometry: plane)
         self.planeNode.geometry?.materials = [mat]
-      //  self.planeNode.eulerAngles.x = -.pi/2
     }
     
     func getWidth() -> CGFloat{
@@ -163,11 +163,7 @@ class BookPage: SCNNode {
     func getHeight() -> CGFloat {
         return self.height
     }
-    
-    func highlight() {
-      //  self.planeNode.runAction(self.imageHighlightAction)
-    }
-    
+
     func getPlane() -> SCNNode {
         return self.planeNode
     }
@@ -192,10 +188,8 @@ class BookPage: SCNNode {
         let textNode = SCNNode()
         textNode.geometry = text
         textNode.position = SCNVector3(x: -0.1, y: -0.1, z: 0.0)
-        //textNode.position = SCNVector3(x: Float(-1 * self.getWidth()/2.0), y: 0.0, z: -0.1)
         
         textNode.scale = SCNVector3(x: 0.001, y: 0.001, z: 0.001)
-       // textNode.eulerAngles.x = -.pi/2
         
         self.textNode = textNode
     }
@@ -235,10 +229,9 @@ class BookPage: SCNNode {
                                                     if let defArray = sensesDict["short_definitions"] as? [Any]
                                                     {
                                                         if let myDef = defArray.first as? String {
-                                                            self.currentDef = myDef
-                                                            DispatchQueue.main.async {
+                                                        DispatchQueue.main.async {
                                                                self.DefinitionUI.updateDefinition(word: word, definition: myDef)
-                                                            }
+                                                        }
                                                         }
                                                     }
                                                 }
@@ -261,17 +254,6 @@ class BookPage: SCNNode {
         
         task.resume()
         
-    }
-    
-    private var imageHighlightAction: SCNAction {
-        return .sequence([
-            .wait(duration: 0.25),
-            .fadeOpacity(to: 0.85, duration: 0.25),
-            .fadeOpacity(to: 0.15, duration: 0.25),
-            .fadeOpacity(to: 0.85, duration: 0.25),
-            // .fadeOut(duration: 0.5),
-            //   .removeFromParentNode()
-            ])
     }
     
     private var slide: SCNAction {

@@ -22,6 +22,8 @@ class DefinitionPlane: SCNNode {
     private var definitionWord: SCNNode?
     private var definitionWordNode: SCNText = SCNText()
     
+    private var noCorners: Bool = true
+    
     init(width:CGFloat, height: CGFloat, word:String = "", definition:String = "") {
         self.width = Float(width)
         self.height = Float(height)
@@ -38,7 +40,10 @@ class DefinitionPlane: SCNNode {
     func createPlane() {
         let plane = SCNPlane(width: CGFloat(self.width), height: CGFloat(self.height))
         let mat = SCNMaterial()
-        plane.cornerRadius = 0.005
+        if (!noCorners)
+        {
+            plane.cornerRadius = 0.005
+        }
         plane.cornerSegmentCount = 1
         mat.diffuse.contents = UIColor.white
         self.mainPlane = SCNNode(geometry: plane)
@@ -68,7 +73,6 @@ class DefinitionPlane: SCNNode {
       //  textNode.position = SCNVector3(x: Float(-1 * self.width/1.5), y: 0.0, z:0.0 )
         textNode.position = SCNVector3(x: Float(-0.17 * self.width), y:self.height/2.0 - 0.02, z:0.0 )
 
-        
         textNode.scale = SCNVector3(x: 0.001, y: 0.001, z: 0.001)
         // textNode.eulerAngles.x = -.pi/2
         
