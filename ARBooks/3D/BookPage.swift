@@ -81,33 +81,61 @@ class BookPage: SCNNode {
         }
     }
     
-    public func findClosest(referencePoint:SCNVector3) -> SCNNode {
+//    public func findClosest(referencePoint:SCNVector3) -> SCNNode {
+//        var closestIndex = 0
+//        var closestLength:Float = 0.0
+//        for (index, word) in textNodeArray.enumerated() {
+//            textNodeArray[index].geometry?.firstMaterial?.diffuse.contents = UIColor.black
+//            let spanX = (word.boundingBox.max.x - word.boundingBox.min.x) / 1000
+//            let spanY = (word.boundingBox.max.y - word.boundingBox.min.y) / 1000
+//            let spanZ = (word.boundingBox.max.z - word.boundingBox.min.z) / 1000
+//
+//            let minX = word.worldPosition.x - spanX/2.0
+//            let maxX = word.worldPosition.x + spanX/2.0
+//            let minY = word.worldPosition.y - spanY/2.0
+//            let maxY = word.worldPosition.y + spanY/2.0
+//            let minZ = word.worldPosition.z - spanZ/2.0
+//            let maxZ = word.worldPosition.z + spanZ/2.0
+//
+//            let dx = max(max(minX - referencePoint.x, 0.0), referencePoint.x - maxX)
+//            //let dy = max(max(minY - referencePoint.y, 0.0), referencePoint.y - maxY)
+//            let dy = Float(0.0)
+//            let dz = max(max(minZ - referencePoint.z, 0.0), referencePoint.z - maxZ)
+//
+//            let dx2 = dx * dx
+//            let dy2 = dy * dy
+//            let dz2 = dz * dz
+//
+//            let length = sqrtf(dx2 + dy2 + dz2)
+//            if index == 0 {
+//                closestLength = length
+//                closestIndex = 0
+//            }
+//            else {
+//                if length < closestLength {
+//                    closestIndex = index
+//                    closestLength = length
+//                }
+//            }
+//        }
+//        self.textNodeArray[closestIndex].geometry?.firstMaterial?.diffuse.contents = UIColor.red
+//        return textNodeArray[closestIndex]
+//    }
+    
+    public func findClosest(referencePoint: SCNVector3) -> SCNNode{
         var closestIndex = 0
         var closestLength:Float = 0.0
+        var lengths: Dictionary<Int, Float> = Dictionary<Int, Float>()
         for (index, word) in textNodeArray.enumerated() {
-            textNodeArray[index].geometry?.firstMaterial?.diffuse.contents = UIColor.black
-            let spanX = (word.boundingBox.max.x - word.boundingBox.min.x) / 1000
-            let spanY = (word.boundingBox.max.y - word.boundingBox.min.y) / 1000
-            let spanZ = (word.boundingBox.max.z - word.boundingBox.min.z) / 1000
-            
-            let minX = word.worldPosition.x - spanX/2.0
-            let maxX = word.worldPosition.x + spanX/2.0
-            let minY = word.worldPosition.y - spanY/2.0
-            let maxY = word.worldPosition.y + spanY/2.0
-            let minZ = word.worldPosition.z - spanZ/2.0
-            let maxZ = word.worldPosition.z + spanZ/2.0
-            
-            let dx = max(max(minX - referencePoint.x, 0.0), referencePoint.x - maxX)
-            //let dy = max(max(minY - referencePoint.y, 0.0), referencePoint.y - maxY)
-            let dy = Float(0.0)
-            let dz = max(max(minZ - referencePoint.z, 0.0), referencePoint.z - maxZ)
-            
-            let dx2 = dx * dx
-            let dy2 = dy * dy
-            let dz2 = dz * dz
-            
-            let length = sqrtf(dx2 + dy2 + dz2)
-            if index == 0 {
+            self.textNodeArray[index].geometry?.firstMaterial?.diffuse.contents = UIColor.black
+            let wordPos = word.worldPosition
+            let distance = SCNVector3(
+                wordPos.x - referencePoint.x,
+                wordPos.y - referencePoint.y,
+                wordPos.z - referencePoint.z
+            )
+            let length = sqrtf(distance.x * distance.x + distance.y * distance.y + distance.z * distance.z)
+            if (index == 0) {
                 closestLength = length
                 closestIndex = 0
             }
@@ -121,6 +149,7 @@ class BookPage: SCNNode {
         self.textNodeArray[closestIndex].geometry?.firstMaterial?.diffuse.contents = UIColor.red
         return textNodeArray[closestIndex]
     }
+    
     
     private func createText(word: String) -> SCNNode {
         let material = SCNMaterial()
